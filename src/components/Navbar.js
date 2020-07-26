@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 
 // https://material-ui.com/components/app-bar/
 import AppBar from "@material-ui/core/AppBar";
