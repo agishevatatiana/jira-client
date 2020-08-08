@@ -1,0 +1,18 @@
+export const formsStyles = {
+    form: {
+        textAlign: 'center'
+    },
+    textField: {
+        width: '100%',
+        margin: '15px 0'
+    },
+    button: {
+        margin: '35px 0 15px'
+    },
+    customError: {
+        color: '#f44336'
+    },
+    smallInfo: {
+        padding: '0 0 35px'
+    }
+};

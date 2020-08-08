@@ -1,19 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import indigo from '@material-ui/core/colors/indigo';
+import blue from '@material-ui/core/colors/blue';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import jwtDecode from 'jwt-decode';
 
 import './App.css';
 
 // pages
-import projects from "./pages/projects";
-import login from "./pages/login";
-import signup from "./pages/signup";
+import projects from './pages/projects';
+import login from './pages/login';
+import signup from './pages/signup';
 
 // components
-import Navbar from "./components/Navbar";
-import indigo from "@material-ui/core/colors/indigo";
-import blue from "@material-ui/core/colors/blue";
+import Navbar from './components/Navbar';
+
+//utils
+import AuthRoute from './utils/AuthRoute';
 
 // https://material-ui.com/customization/color/
 const theme = createMuiTheme({
@@ -23,17 +27,32 @@ const theme = createMuiTheme({
     }
 });
 
+// authentication code
+let authenticated = false;
+const token = localStorage.getItem('JiraToken');
+if (token) {
+    const decodeToken = jwtDecode(token);
+
+    // does token expired
+    if (decodeToken.exp * 1000 < Date.now()) {
+        window.location.href = '/login';
+        authenticated = false;
+    } else {
+        authenticated = true;
+    }
+}
+
 function App() {
   return (
       <MuiThemeProvider theme={theme}>
-          <div className="App">
+          <div className='App'>
               <Router>
                   <Navbar/>
-                  <div className="container">
+                  <div className='container'>
                       <Switch>
-                          <Route exact path="/" component={projects}/>
-                          <Route exact path="/login" component={login}/>
-                          <Route exact path="/signup" component={signup}/>
+                          <Route exact path='/' component={projects}/>
+                          <AuthRoute exact path='/login' component={login} authenticated={authenticated}/>
+                          <AuthRoute exact path='/signup' component={signup} authenticated={authenticated}/>
                       </Switch>
                   </div>
               </Router>

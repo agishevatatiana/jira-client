@@ -1,7 +1,7 @@
 // https://github.com/minwe/jetbrains-react
 
 import React, {Component} from 'react';
-import axios from "axios";
+import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import Table from '@material-ui/core/Table';
@@ -46,16 +46,16 @@ class projects extends Component {
         let projectRows = this.state.projects
             ? this.state.projects.map((row) => (
                 <TableRow key={row.name}>
-                    <TableCell component="th" scope="row">
+                    <TableCell component='th' scope='row'>
                         {row.name}
                     </TableCell>
-                    <TableCell align="left">{row.key}</TableCell>
-                    <TableCell align="left">{row.lead}</TableCell>
+                    <TableCell align='left'>{row.key}</TableCell>
+                    <TableCell align='left'>{row.lead}</TableCell>
                 </TableRow>
             ))
             : (this.state.errors
-                ? <TableRow><TableCell align="left">{this.state.errors}</TableCell></TableRow>
-                : <TableRow><TableCell align="left">Loading...</TableCell></TableRow>);
+                ? <TableRow><TableCell align='left'>{this.state.errors}</TableCell></TableRow>
+                : <TableRow><TableCell align='left'>Loading...</TableCell></TableRow>);
         return (
             <div>
                 <h1>Projects</h1>
