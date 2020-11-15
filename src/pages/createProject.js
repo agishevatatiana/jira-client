@@ -79,7 +79,6 @@ class CreateProject extends Component {
     };
 
     handleCreateProject = async() => {
-        // todo: sent create project request using anxious
         // try {
         //     const projectRes = await axios.post('/project', this.state.newProjectData);
         // } catch (err) {
