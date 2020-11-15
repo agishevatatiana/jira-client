@@ -6,9 +6,12 @@ import blue from '@material-ui/core/colors/blue';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import jwtDecode from 'jwt-decode';
 
+// 6:45:04
+
 import './App.css';
 
 // pages
+import createProject from './pages/createProject';
 import projects from './pages/projects';
 import login from './pages/login';
 import signup from './pages/signup';
@@ -32,19 +35,19 @@ const theme = createMuiTheme({
 });
 
 // authentication code
-let authenticated = false;
-const token = localStorage.getItem('JiraToken');
-if (token) {
-    const decodeToken = jwtDecode(token);
-
-    // does token expired
-    if (decodeToken.exp * 1000 < Date.now()) {
-        window.location.href = '/login';
-        authenticated = false;
-    } else {
-        authenticated = true;
-    }
-}
+let authenticated = true;
+// const token = localStorage.getItem('JiraToken');
+// if (token) {
+//     const decodeToken = jwtDecode(token);
+//
+//     // does token expired
+//     if (decodeToken.exp * 1000 < Date.now()) {
+//         window.location.href = '/login';
+//         authenticated = false;
+//     } else {
+//         authenticated = true;
+//     }
+// }
 
 function App() {
   return (

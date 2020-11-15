@@ -26,15 +26,23 @@ class projects extends Component {
     };
 
     getRows = async() => {
-        try {
-            const projectsRes = await axios.get('/projects');
             this.setState({
-                projects: projectsRes.data
+                projects: [{
+                    key: 0, // key from db
+                    project_key: 'mock-project-0', // usually the first letters of words which are used in name
+                    lead: 'creatorId',
+                    name: 'Mock Project'
+                }]
             });
-        } catch (err) {
-            console.log('/projects faild: ', err);
-            this.setState({ errors: err.message });
-        }
+        // try {
+        //     const projectsRes = await axios.get('/projects');
+        //     this.setState({
+        //         projects: projectsRes.data
+        //     });
+        // } catch (err) {
+        //     console.log('/projects failed: ', err);
+        //     this.setState({ errors: err.message });
+        // }
     };
 
     componentDidMount() {
@@ -49,7 +57,7 @@ class projects extends Component {
                     <TableCell component='th' scope='row'>
                         {row.name}
                     </TableCell>
-                    <TableCell align='left'>{row.key}</TableCell>
+                    <TableCell align='left'>{row.project_key}</TableCell>
                     <TableCell align='left'>{row.lead}</TableCell>
                 </TableRow>
             ))
