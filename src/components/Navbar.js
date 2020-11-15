@@ -8,7 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import CreateProject from "../pages/createProject";
+
+import CreateProject from "../dialog/createProject";
 
 class Navbar extends Component {
 

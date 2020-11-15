@@ -11,7 +11,7 @@ import jwtDecode from 'jwt-decode';
 import './App.css';
 
 // pages
-import createProject from './pages/createProject';
+import createProject from './dialog/createProject';
 import projects from './pages/projects';
 import login from './pages/login';
 import signup from './pages/signup';
