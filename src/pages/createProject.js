@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { random } from 'lodash';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -20,7 +21,8 @@ class CreateProject extends Component {
                 project_key: '',
                 lead: ''
             },
-            isCreateDisabled: true
+            isCreateDisabled: true,
+            errors: ''
         };
     }
     static defaultProps = {};
@@ -76,10 +78,15 @@ class CreateProject extends Component {
         }, '');
     };
 
-    handleCreateProject = () => {
+    handleCreateProject = async() => {
         // todo: sent create project request using anxious
+        // try {
+        //     const projectRes = await axios.post('/project', this.state.newProjectData);
+        // } catch (err) {
+        //     console.log('/project failed: ', err);
+        //     this.setState({ errors: err.message });
+        // }
     };
-
 
     render() {
         return (
