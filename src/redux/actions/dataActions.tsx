@@ -7,7 +7,7 @@ const initialState = {
     notifications: []
 };
 
-export default function (state = initialState, action) {
+export default function (state = initialState, action: any) {
     switch (action.type) {
         case SET_AUTHENTICATED:
             return {

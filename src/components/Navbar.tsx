@@ -1,5 +1,4 @@
-import React, {useContext, Component} from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
 // https://material-ui.com/components/app-bar/
@@ -11,20 +10,22 @@ import AddIcon from '@material-ui/icons/Add';
 
 import CreateProject from "../dialog/createProject";
 
-class Navbar extends Component {
+type NavbarState = {
+    authenticated: boolean;
+    isCreateProjectOpen: boolean;
+}
 
-    constructor() {
-        super();
+class Navbar extends Component<{}, NavbarState> {
+
+    constructor(props: any) {
+        super(props);
         this.state = {
             authenticated: false,
             isCreateProjectOpen: false
         };
     }
-    static defaultProps = {};
 
-    static propTypes = {};
-
-    getAuthState = async() => {
+    getAuthState() {
         // authentication code
         let authenticated = true;
         // const token = localStorage.getItem('JiraToken');
@@ -42,27 +43,27 @@ class Navbar extends Component {
         this.setState({
             authenticated
         });
-    };
+    }
 
     componentDidMount() {
         this.getAuthState()
     }
 
-    handleCreateProjectOpen = () => {
-        this.setState({ isCreateProjectOpen: true });
-    };
-
-    handleCreateProjectClose = (isOpen) => {
-        this.setState({ isCreateProjectOpen: !isOpen });
-    };
-
     render() {
-        let showNavButtons = this.state.authenticated
+        const handleCreateProjectOpen = () => {
+            this.setState({ isCreateProjectOpen: true });
+        };
+
+        const handleCreateProjectClose = (isOpen: boolean) => {
+            this.setState({ isCreateProjectOpen: !isOpen });
+        };
+
+        const showNavButtons = this.state.authenticated
             ?
             <div className='position-container'>
                 <div className='position-start'><Button color='inherit' component={Link} to='/'>Projects</Button></div>
                 <div className='position-end'>
-                    <Fab color='primary' variant='extended' size='medium' onClick={this.handleCreateProjectOpen}>
+                    <Fab color='primary' variant='extended' size='medium' onClick={handleCreateProjectOpen}>
                         <AddIcon/>
                         Create Project
                     </Fab>
@@ -75,16 +76,18 @@ class Navbar extends Component {
                     <Button color='inherit' component={Link} to='/signup'>Sign Up</Button>
                 </div>
             </div>;
+        const createProjectModal = this.state.isCreateProjectOpen ?
+            <CreateProject isOpen={this.state.isCreateProjectOpen} onClose={handleCreateProjectClose}/>
+            : '';
         return (
-            this.state.isCreateProjectOpen
-                ?
-                <CreateProject open={this.state.isCreateProjectOpen} close={this.handleCreateProjectClose}/>
-                :
+            <div>
+                {createProjectModal}
                 <AppBar position='fixed'>
                     <Toolbar>
                         {showNavButtons}
                     </Toolbar>
                 </AppBar>
+            </div>
         );
     }
 }

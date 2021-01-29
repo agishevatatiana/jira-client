@@ -1,32 +1,49 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React, {Component, FormEvent} from 'react';
+import {Link} from 'react-router-dom';
 
 import axios from 'axios';
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { formsStyles } from '../styles/forms-styles';
+type SignUpProps = {
+    formsStyles: any;
+}
 
-class signup extends Component {
-    constructor() {
-        super();
+type SignUpErrors = {
+    full_name: string;
+    message: string;
+    password: string;
+    confirmPassword: string;
+    email: string;
+}
+
+type SignUpState = {
+    full_name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    loading: boolean;
+    errors: SignUpErrors | null;
+}
+
+class signup extends Component<SignUpProps, SignUpState> {
+    constructor(props: SignUpProps) {
+        super(props);
         this.state = {
             full_name: '',
             email: '',
             password: '',
             confirmPassword: '',
             loading: false,
-            errors: {}
+            errors: null
         };
     }
 
-    handleSubmit = async(event) => {
+    handleSubmit = async(event: FormEvent) => {
         event.preventDefault();
         this.setState({ loading: true });
         const { full_name, email, password, confirmPassword } = this.state;
@@ -35,7 +52,7 @@ class signup extends Component {
             const token = await axios.post('/signup', userData);
             localStorage.setItem('JiraToken', `Bearer ${token.data}`);
             this.setState({ loading: false });
-            this.props.history.push('/')
+            // history.push('/') see login actions
         } catch (err) {
             console.log(err.response.data);
             this.setState({ errors: err.response.data, loading: false });
@@ -43,21 +60,24 @@ class signup extends Component {
 
     };
 
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
+    handleChange = (event: any) => {
+        const name = (event.target || {}).name;
+        const value = (event.target || {}).value;
+        const newState: any = {
+            [name]: [value]
+        };
+        this.setState(newState);
     };
 
     render() {
-        const { classes } = this.props;
+        const { formsStyles } = this.props;
         const { errors, loading } = this.state;
         return (
-            <Grid container className={classes.form}>
+            <Grid container className={formsStyles.form}>
                 <Grid item sm></Grid>
                 <Grid item sm>
                     <div><h1>Sign Up</h1></div>
-                    {this.state.loading && (<CircularProgress />) ||
+                    {loading && (<CircularProgress />) ||
                     (<div>
                         <form noValidate onSubmit={this.handleSubmit}>
                             <TextField
@@ -65,9 +85,9 @@ class signup extends Component {
                                 name='full_name'
                                 type='text'
                                 label='Full Name'
-                                helperText={errors.full_name}
-                                error={!!errors.full_name}
-                                className={classes.textField}
+                                helperText={errors?.full_name}
+                                error={!!errors?.full_name}
+                                className={formsStyles.textField}
                                 value={this.state.full_name}
                                 onChange={this.handleChange}
                             />
@@ -76,9 +96,9 @@ class signup extends Component {
                                 name='email'
                                 type='email'
                                 label='Email'
-                                helperText={errors.email}
-                                error={!!errors.email}
-                                className={classes.textField}
+                                helperText={errors?.email}
+                                error={!!errors?.email}
+                                className={formsStyles.textField}
                                 value={this.state.email}
                                 onChange={this.handleChange}
                             />
@@ -87,9 +107,9 @@ class signup extends Component {
                                 name='password'
                                 type='password'
                                 label='Password'
-                                helperText={errors.password || errors.message}
-                                error={!!errors.password || !!errors.message}
-                                className={classes.textField}
+                                helperText={errors?.password || errors?.message}
+                                error={!!errors?.password || !!errors?.message}
+                                className={formsStyles.textField}
                                 value={this.state.password}
                                 onChange={this.handleChange}
                             />
@@ -98,20 +118,20 @@ class signup extends Component {
                                 name='confirmPassword'
                                 type='password'
                                 label='Confirm Password'
-                                helperText={errors.confirmPassword}
-                                error={!!errors.confirmPassword}
-                                className={classes.textField}
+                                helperText={errors?.confirmPassword}
+                                error={!!errors?.confirmPassword}
+                                className={formsStyles.textField}
                                 value={this.state.confirmPassword}
                                 onChange={this.handleChange}
                             />
-                            {errors.message && (
-                                <Typography variant='body2' className={classes.customError}>
-                                    {errors.message}
+                            {errors?.message && (
+                                <Typography variant='body2' className={formsStyles.customError}>
+                                    {errors?.message}
                                 </Typography>
                             )}
-                            <Button variant='contained' color='primary' type='submit' className={classes.button}>Sign Up</Button>
+                            <Button variant='contained' color='primary' type='submit' className={formsStyles.button}>Sign Up</Button>
                         </form>
-                        <small className={classes.smallInfo}>If you have an account, go to <Link to='/login'>Log In Page</Link></small>
+                        <small className={formsStyles.smallInfo}>If you have an account, go to <Link to='/login'>Log In Page</Link></small>
                     </div>)}
                 </Grid>
                 <Grid item sm></Grid>
@@ -120,8 +140,4 @@ class signup extends Component {
     }
 }
 
-signup.propTypes = {
-    classes: PropTypes.object.isRequired
-};
-
-export default withStyles(formsStyles)(signup);
+export default signup;
