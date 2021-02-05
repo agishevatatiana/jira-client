@@ -13,6 +13,7 @@ import './App.css';
 import projects from './pages/projects';
 import login from './pages/login';
 import signup from './pages/signup';
+import project from './pages/project';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -43,7 +44,7 @@ if (token) {
 const theme = createMuiTheme({
   palette: {
     primary: indigo,
-    secondary: blue,
+    secondary: blue
   }
 });
 
@@ -55,6 +56,7 @@ const App = () => (
           <Container className="container">
             <Switch>
               <Route exact path='/' component={projects}/>
+              <Route exact path='/project/:projectKey' component={project} />
               <AuthRoute exact path='/login' component={login} authenticated={authenticated}/>
               <AuthRoute exact path='/signup' component={signup} authenticated={authenticated}/>
             </Switch>

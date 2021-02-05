@@ -1,6 +1,7 @@
 import React, {Component, FormEvent} from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import { withStyles } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -9,9 +10,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux stuff
 import { loginUser } from '../redux/actions/userActions';
+import { formsStyles } from '../styles/forms-styles';
 
 type LoginProps = {
-    formsStyles: any;
+    classes: any;
 }
 
 type LoginErrors = {
@@ -62,10 +64,10 @@ class login extends Component<LoginProps, LoginState> {
     }
 
     render() {
-        const { formsStyles } = this.props;
+        const { classes } = this.props;
         const { errors, loading } = this.state;
         return (
-            <Grid container className={formsStyles.form}>
+            <Grid container className={classes.form}>
                 <Grid item sm></Grid>
                 <Grid item sm>
                     <div><h1>Log In</h1></div>
@@ -79,7 +81,7 @@ class login extends Component<LoginProps, LoginState> {
                                     label='Email'
                                     helperText={errors?.email}
                                     error={!!errors?.email}
-                                    className={formsStyles.textField}
+                                    className={classes.textField}
                                     value={this.state.email}
                                     onChange={this.handleChange}
                                 />
@@ -90,19 +92,19 @@ class login extends Component<LoginProps, LoginState> {
                                     label='Password'
                                     helperText={errors?.password}
                                     error={!!errors?.password}
-                                    className={formsStyles.textField}
+                                    className={classes.textField}
                                     value={this.state.password}
                                     onChange={this.handleChange}
                                 />
                                 {errors?.message && (
-                                    <Typography variant='body2' className={formsStyles.customError}>
+                                    <Typography variant='body2' className={classes.customError}>
                                         {errors?.message}
                                     </Typography>
                                 )}
-                                <Button variant='contained' color='primary' type='submit' className={formsStyles.button}>Log
+                                <Button variant='contained' color='primary' type='submit' className={classes.button}>Log
                                     In</Button>
                             </form>
-                            <small className={formsStyles.smallInfo}>If you don&apos;t have an account, go to <Link to='/signup'>Sign Up Page</Link></small>
+                            <small className={classes.smallInfo}>If you don&apos;t have an account, go to <Link to='/signup'>Sign Up Page</Link></small>
                         </div>
                     )}
                 </Grid>
@@ -112,4 +114,4 @@ class login extends Component<LoginProps, LoginState> {
     }
 }
 
-export default login;
+export default withStyles(formsStyles)(login);
