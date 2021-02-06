@@ -1,5 +1,6 @@
-import { Project, User } from '../models/models';
+import { columnsType, Project, User } from '../models/models';
 
+// projects
 const createMockProjects = (key: string | undefined, project_key: string, lead: string, name: string): Project => ({
     key, project_key, lead, name
 });
@@ -11,7 +12,9 @@ export const projectsMock = [
 ];
 
 export const getProjectByKey = (key: string | null) => projectsMock.find(project => project.key === key);
+// *** projects
 
+// users
 const createMockUsers = (
     key: string,
     email: string,
@@ -48,3 +51,11 @@ export const usersMock = [
 ];
 
 export const getUsersByProjectKey = (key: string): User[] => usersMock.filter(user => (user.project_keys || {})[key]);
+// *** users
+
+// columns
+export const defaultColumns: columnsType = {
+    'to_do': 'TO DO',
+    'in_progress': 'IN PROGRESS',
+    'done': 'DONE'
+};

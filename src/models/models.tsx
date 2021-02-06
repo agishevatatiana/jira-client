@@ -1,4 +1,7 @@
 export type taskStatus = 'to_do' | 'in_progress' | 'done';
+export type columnsType = {
+    [key: string]: string;
+};
 
 export interface Project {
     project_key: string; // usually the first letters of words which are used in name
@@ -42,5 +45,3 @@ export interface LogInUser {
     email: string;
     password: string;
 }
-
-export const POSSIBLE_STATUSES = ['to_do', 'in_progress', 'done'];
