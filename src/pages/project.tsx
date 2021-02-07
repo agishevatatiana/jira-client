@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import {Typography, Grid, Paper} from '@material-ui/core';
+import { Typography, Grid, Paper } from '@material-ui/core';
 
 import { Project, User, columnsType } from '../models/models';
 import { getProjectByKey, getUsersByProjectKey, defaultColumns } from '../mocks/mocks';
 import Breadcrumbs from '../components/Breadcrumbs';
 import UsersList from '../components/UsersList';
 import EditMenu from "../components/EditMenu";
+import ProjectColumn from "../components/ProjectColumn";
 
 type ProjectProps = {
     match: any;
@@ -48,29 +49,13 @@ class project extends Component<ProjectProps, ProjectState> {
     render() {
         const { project, users, columns } = this.state;
         const breadcrumbsLinks = [{ to: '/', title: 'Projects' }];
-        const columnOptions = ['Set column limit', 'Delete'];
-        const columnsView = Object.keys(columns).map((col, index) => {
-            return (
-                <Grid key={index} item container direction="column" xs>
-                    <Paper>
-                        <Grid item container direction="row" justify="space-between">
-                            <Grid item>
-                                <Typography>{columns[col]}</Typography>
-                            </Grid>
-                            <Grid item>
-                                <EditMenu columnOptions={columnOptions} />
-                            </Grid>
-                        </Grid>
-                    </Paper>
-                </Grid>
-        )});
         return (
             <div>
                 <Breadcrumbs links={breadcrumbsLinks} current={project?.name} />
                 <UsersList users={users} />
                 <DndProvider backend={HTML5Backend}>
                     <Grid container spacing={2}>
-                        {columnsView}
+                        <ProjectColumn columns={columns} />
                     </Grid>
                 </DndProvider>
             </div>

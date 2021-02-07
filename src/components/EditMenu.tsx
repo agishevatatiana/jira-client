@@ -1,63 +1,66 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, MouseEvent} from 'react';
 import PropTypes from 'prop-types';
-import {IconButton, Menu, MenuItem, MenuList, Paper} from '@material-ui/core';
+import { ClickAwayListener, IconButton, MenuItem, MenuList, Paper, Popper, Typography } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { withStyles } from '@material-ui/core';
+
+import { editMenuStyles } from '../styles/edit-menu-styles';
 
 type EditMenuProps = {
-    columnOptions: string[];
+    menuItems: string[];
+    classes: any
 }
 
-// todo: rewrite: replace Menu with Popper (https://material-ui.com/components/menus/#menulist-composition)
 function EditMenu(props: EditMenuProps) {
-    const { columnOptions } = props;
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const { menuItems, classes } = props;
+    const [open, setOpen] = useState(false);
+    const anchorRef = useRef<HTMLButtonElement>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+    const handleToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleClose = (event: MouseEvent<EventTarget>) => {
+        const target = event.target;
+        if (anchorRef.current && target instanceof Node && anchorRef.current.contains(target)) {
+            return;
+        }
+
+        setOpen(false);
     };
 
     return (
         <div>
             <IconButton
-                aria-label="more"
-                aria-controls="edit-menu"
+                className={open ? classes.openBtn : ''}
+                ref={anchorRef}
+                aria-controls={open ? 'menu-list-grow' : undefined}
                 aria-haspopup="true"
                 size="small"
-                onClick={handleClick}
+                onClick={handleToggle}
             >
                 <MoreHorizIcon/>
             </IconButton>
-            <Menu
-                id="edit-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={!!open}
-                onClose={handleClose}
-                PaperProps={{
-                    style: {
-                        maxHeight: 25 * 4.5,
-                        width: '15ch'
-                    },
-                }}
-            >
-                {columnOptions.map((option) => (
-                    <MenuItem key={option}>
-                        {option}
-                    </MenuItem>
-                ))}
-            </Menu>
+            <Popper className={classes.popper} open={open} anchorEl={anchorRef.current} disablePortal>
+                <Paper>
+                    <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList autoFocusItem={open} id="menu-list-grow" >
+                            {menuItems.map((item, index) => (
+                                <MenuItem key={index}>
+                                    <Typography variant="body2">{item}</Typography>
+                                </MenuItem>
+                            ))}
+                        </MenuList>
+                    </ClickAwayListener>
+                </Paper>
+            </Popper>
         </div>
     );
 }
 
 EditMenu.propTypes = {
-    columnOptions: PropTypes.array.isRequired
+    menuItems: PropTypes.array.isRequired
 };
 EditMenu.defaultProps = {};
 
-export default EditMenu;
+export default withStyles(editMenuStyles)(EditMenu);
