@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Typography, Grid, Paper } from '@material-ui/core';
 
-import { Project, User, columnsType } from '../models/models';
-import { getProjectByKey, getUsersByProjectKey, defaultColumns } from '../mocks/mocks';
+import { Project, User } from '../models/models';
+import { getProjectByKey, getUsersByProjectKey } from '../mocks/mocks';
 import Breadcrumbs from '../components/Breadcrumbs';
 import UsersList from '../components/UsersList';
-import EditMenu from "../components/EditMenu";
-import ProjectColumn from "../components/ProjectColumn";
+import DndProjectColumns from "../components/DndProjectColumns";
 
 type ProjectProps = {
     match: any;
@@ -18,7 +16,6 @@ type ProjectState = {
     project: Project | null;
     users: User[];
     errors: any;
-    columns: columnsType
 }
 
 class project extends Component<ProjectProps, ProjectState> {
@@ -28,8 +25,7 @@ class project extends Component<ProjectProps, ProjectState> {
         this.state = {
             project: null,
             users: [],
-            errors: null,
-            columns: defaultColumns
+            errors: null
         };
     }
 
@@ -47,16 +43,14 @@ class project extends Component<ProjectProps, ProjectState> {
     }
 
     render() {
-        const { project, users, columns } = this.state;
+        const { project, users } = this.state;
         const breadcrumbsLinks = [{ to: '/', title: 'Projects' }];
         return (
             <div>
                 <Breadcrumbs links={breadcrumbsLinks} current={project?.name} />
                 <UsersList users={users} />
                 <DndProvider backend={HTML5Backend}>
-                    <Grid container spacing={2}>
-                        <ProjectColumn columns={columns} />
-                    </Grid>
+                    <DndProjectColumns />
                 </DndProvider>
             </div>
         );

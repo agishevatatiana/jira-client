@@ -1,4 +1,5 @@
-import { columnsType, Project, User } from '../models/models';
+import { Column, Project, User } from "../models/models";
+import ProjectColumn from "../components/ProjectColumn";
 
 // projects
 const createMockProjects = (key: string | undefined, project_key: string, lead: string, name: string): Project => ({
@@ -54,8 +55,9 @@ export const getUsersByProjectKey = (key: string): User[] => usersMock.filter(us
 // *** users
 
 // columns
-export const defaultColumns: columnsType = {
-    'to_do': 'TO DO',
-    'in_progress': 'IN PROGRESS',
-    'done': 'DONE'
-};
+const createProjectColumn = (key: string, title: string, sequence: number): Column => ({key, title, sequence});
+export const defaultColumns: Column[] = [
+    createProjectColumn('to_do', 'TO DO', 1),
+    createProjectColumn('in_progress', 'IN PROGRESS', 2),
+    createProjectColumn('done', 'DONE', 3),
+];

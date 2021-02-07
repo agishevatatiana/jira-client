@@ -1,7 +1,10 @@
 export type taskStatus = 'to_do' | 'in_progress' | 'done';
-export type columnsType = {
-    [key: string]: string;
-};
+
+export interface Column {
+    key: string,
+    title: string,
+    sequence: number
+}
 
 export interface Project {
     project_key: string; // usually the first letters of words which are used in name
@@ -44,4 +47,10 @@ export interface SignUpUser extends User {
 export interface LogInUser {
     email: string;
     password: string;
+}
+
+
+// dnd
+export const ItemTypes = {
+    BOX: 'box',
 }
