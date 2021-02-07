@@ -1,4 +1,6 @@
-export const formsStyles = {
+import { Styles } from '@material-ui/styles/withStyles';
+
+export const formsStyles: Styles<any, any> = {
     form: {
         textAlign: 'center'
     },

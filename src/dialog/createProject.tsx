@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Project } from "../models/models";
 
 type CreateProjectProps = {
     isOpen: boolean,
@@ -14,32 +15,26 @@ type CreateProjectProps = {
 }
 
 type CreateProjectState = {
-    randomNum: string;
-    newProjectData: {
-        name: string,
-        project_key: string,
-        lead: string
-    },
+    randomNum: string,
+    newProjectData: Project,
     isCreateDisabled: boolean,
     errors: {}
 }
 
-const defaultState = {
-    randomNum: '0',
-    newProjectData: {
-        name: '',
-        project_key: '',
-        lead: ''
-    },
-    isCreateDisabled: true,
-    errors: {}
-};
-
 class CreateProject extends Component<CreateProjectProps, CreateProjectState> {
-
+    defaultState: CreateProjectState = {
+        randomNum: '0',
+        newProjectData: {
+            name: '',
+            project_key: '',
+            lead: ''
+        },
+        isCreateDisabled: true,
+        errors: {}
+    };
     constructor(createProjectProps: CreateProjectProps) {
         super(createProjectProps);
-        this.state = defaultState;
+        this.state = this.defaultState;
     }
 
     handleKeyChange() {
@@ -77,7 +72,7 @@ class CreateProject extends Component<CreateProjectProps, CreateProjectState> {
 
         const handleClose = () => {
             this.props.onClose(true);
-            this.setState(defaultState);
+            this.setState(this.defaultState);
         };
 
         const handleCreateProject = async() => {
