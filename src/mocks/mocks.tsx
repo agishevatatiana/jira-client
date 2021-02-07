@@ -57,7 +57,10 @@ export const getUsersByProjectKey = (key: string): User[] => usersMock.filter(us
 // columns
 const createProjectColumn = (key: string, title: string, sequence: number): Column => ({key, title, sequence});
 export const defaultColumns: Column[] = [
-    createProjectColumn('to_do', 'TO DO', 1),
-    createProjectColumn('in_progress', 'IN PROGRESS', 2),
-    createProjectColumn('done', 'DONE', 3),
+    createProjectColumn('to_do', 'TO DO', 0),
+    createProjectColumn('in_progress', 'IN PROGRESS', 1),
+    createProjectColumn('done', 'DONE', 2),
 ];
+
+// tasks
+const createTask = () => ({});

@@ -1,63 +1,18 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
+
 import ProjectColumn from "./ProjectColumn";
 import { Column } from "../models/models";
 import { defaultColumns } from "../mocks/mocks";
-
+import update from 'immutability-helper';
 
 type DndProjectColumnsState = {
     columns: Column[]
 }
-//
-// const columnSource = {
-//     beginDrag(props: any, monitor: any, component: Component) {
-//         console.log('props: ', props);
-//         console.log('monitor: ', monitor);
-//         console.log('component: ', component);
-//     }
-// };
-//
-// const columnTarget = {
-//     canDrop(props: any, monitor: any) {
-//         const item = monitor.getItem();
-//         console.log(item);
-//         return true;
-//     },
-//
-//     hover(props: any, monitor: any, component: any) {
-//         console.log('hover');
-//     }
-// };
-//
-// const Types = {
-//     COLUMN: 'column'
-// };
-//
-// function collect(connect: any, monitor: any) {
-//     return {
-//         // Call this function inside render()
-//         // to let React DnD handle the drag events:
-//         connectDragSource: connect.dragSource(),
-//         // You can ask the monitor about the current drag state:
-//         isDragging: monitor.isDragging()
-//     }
-// }
-//
-// function collectTargets(connect: any, monitor: any) {
-//     return {
-//         // Call this function inside render()
-//         // to let React DnD handle the drag events:
-//         connectDropTarget: connect.dropTarget(),
-//         // You can ask the monitor about the current drag state:
-//         isOver: monitor.isOver(),
-//         isOverCurrent: monitor.isOver({ shallow: true }),
-//         canDrop: monitor.canDrop(),
-//         itemType: monitor.getItemType()
-//     }
-// }
 
 class DndProjectColumns extends Component<{}, DndProjectColumnsState> {
-
+    pendingUpdateFn: any;
+    requestedFrame: number | undefined;
     constructor(props: {}) {
         super(props);
         this.state = {
@@ -65,9 +20,68 @@ class DndProjectColumns extends Component<{}, DndProjectColumnsState> {
         }
     }
 
+    componentWillUnmount(): void {
+        if (this.requestedFrame !== undefined) {
+            cancelAnimationFrame(this.requestedFrame)
+        }
+    }
+
+    scheduleUpdate(updateFn: any) {
+        this.pendingUpdateFn = updateFn;
+
+        if (!this.requestedFrame) {
+            this.requestedFrame = requestAnimationFrame(this.drawFrame);
+        }
+    }
+
+    drawFrame = (): void => {
+        const nextState = update(this.state, this.pendingUpdateFn);
+        this.setState(nextState);
+
+        this.pendingUpdateFn = undefined;
+        this.requestedFrame = undefined;
+    };
+
+    moveColumn = (key: string, afterKey: string): void => {
+        const { columns } = this.state;
+
+        let column = null;
+        let columnAfter = null;
+        let index = null;
+        let afterIndex = null;
+
+        for (let i = 0; i < columns.length; i++) {
+            if (columns[i].key === key) {
+                column = columns[i];
+                index = i;
+            }
+
+            if (columns[i].key === afterKey) {
+                columnAfter = columns[i];
+                afterIndex = i;
+            }
+        }
+
+        if (!column || !columnAfter || index === null || afterIndex === null) return;
+
+        column.sequence = afterIndex;
+        columnAfter.sequence = index;
+
+        this.scheduleUpdate({
+            columns: {
+                $splice: [
+                    [index, 1],
+                    [afterIndex, 0, column],
+                ],
+            }
+        })
+    };
+
     render() {
         const { columns } = this.state;
-        const columnsView = columns.map((col, index) => (<ProjectColumn key={col.key} column={col} />));
+        const columnsView = columns
+            .sort((a, b) => a.sequence - b.sequence)
+            .map((col, index) => (<ProjectColumn key={col.key} column={col} moveColumn={this.moveColumn} />));
         return (
             <Grid container spacing={2}>
                 {columnsView}

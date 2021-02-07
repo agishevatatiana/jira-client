@@ -1,4 +1,5 @@
 export type taskStatus = 'to_do' | 'in_progress' | 'done';
+export type taskType = 'epic' | 'story' | 'task' | 'sub_task' | 'bug';
 
 export interface Column {
     key: string,
@@ -24,6 +25,7 @@ export interface Task {
     reporter: string; // the key of the user who reported task
     description: string;
     status: taskStatus;
+    type: taskType;
     summary: string;
     sequence: number; // sequence of creation, it doesn't change if smth was removed
     assignee?: string; // the key of the user who assigned to do this task
@@ -51,6 +53,7 @@ export interface LogInUser {
 
 
 // dnd
-export const ItemTypes = {
-    BOX: 'box',
-}
+export const DnDTypes = {
+    COLUMN: 'column',
+    TASK: 'task'
+};

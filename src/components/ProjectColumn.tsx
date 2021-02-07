@@ -1,76 +1,113 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
-import { Column, ItemTypes } from "../models/models";
+import { Column, DnDTypes } from "../models/models";
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core';
-import { DragSource, useDrag } from "react-dnd"
+import { DragLayerMonitor, DragSource, DropTarget, DropTargetMonitor } from "react-dnd"
 import { flow } from 'lodash';
 
 import EditMenu from './EditMenu';
 import { projectColumnStyles } from '../styles/project-column-styles';
 
+// todo: 1) fix problem with strange shadow behavior with dnd
+//  2) fix cursor handlerMove using react-dnd effects
+
 type ProjectColumnProps = {
     column: Column,
     key: string,
     classes: any,
+    moveColumn: (key: string, afterKey: string) => void,
     connectDragSource: any,
-    connectDragPreview: any
+    connectDragPreview: any,
+    connectDropTarget: any,
+    isDragging: boolean
 }
 
 const columnSource = {
-    beginDrag(props: any, monitor: any, component: Component) {
-        console.log('props: ', props);
-        console.log('monitor: ', monitor);
-        console.log('component: ', component);
-        const item = { id: props.key };
+    beginDrag(props: ProjectColumnProps) {
+        const item = {
+            ...props.column,
+            type: DnDTypes.COLUMN,
+            id: props.key,
+        };
         return item;
     }
 };
-const Types = {
-    COLUMN: 'column'
+
+const columnTarget = {
+    canDrop(props: ProjectColumnProps, monitor: DropTargetMonitor) {
+        const item = monitor.getItem();
+        return item && item.key && item.key !== props.column.key;
+    },
+
+    hover(props: ProjectColumnProps, monitor: DropTargetMonitor) {
+        const item = monitor.getItem();
+        if (!item || !item.key || item.key === props.column.key) {
+            return;
+        }
+        props.moveColumn(item.key, props.column.key);
+    }
 };
 
-function collect(connect: any, monitor: any) {
+function collectTargets(connect: any, monitor: DropTargetMonitor) {
     return {
-        // Call this function inside render()
-        // to let React DnD handle the drag events:
-        connectDragSource: connect.dragSource(),
-        connectDragPreview: connect.dragPreview(),
-        // You can ask the monitor about the current drag state:
-        isDragging: monitor.isDragging(),
-        opacity: monitor.isDragging() ? 0 : 1
+        accept: DnDTypes.COLUMN,
+        connectDropTarget: connect.dropTarget(),
+
+        // unused, figure out if it is possible to fix 1), 2) using this properties
+        isOver: monitor.isOver(),
+        isOverCurrent: monitor.isOver({ shallow: true }),
+        canDrop: monitor.canDrop(),
+        itemType: monitor.getItemType(),
     }
 }
-class ProjectColumn extends Component<ProjectColumnProps, {}> {
 
+function collect(connect: any, monitor: DragLayerMonitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        connectDragPreview: connect.dragPreview(),
+        isDragging: monitor.isDragging(),
+    }
+}
+
+class ProjectColumn extends Component<ProjectColumnProps, {}> {
     render() {
         const columnEditMenu = ['Set column limit', 'Delete'];
-        const {column, classes, connectDragSource, connectDragPreview} = this.props;
-        const {key, title, sequence} = column;
-        console.log(this.props);
-        const handler = (title: string) => connectDragSource(<div><Typography variant="overline">{title}</Typography></div>);
-        const preview = (key: string, title: string, index: number) => {
-            return connectDragPreview(
-                <div key={key}>
-                        <Paper className={classes.paper}>
-                            <Grid className={classes.columnHeader} item container direction="row"
-                                  justify="space-between">
-                                <Grid item>
-                                    {handler(title)}
-                                </Grid>
-                                <Grid item>
-                                    <EditMenu menuItems={columnEditMenu}/>
-                                </Grid>
+        const { column, classes, connectDragSource, connectDragPreview, connectDropTarget, isDragging } = this.props;
+        const { key, title } = column;
+        const handler = (title: string) => connectDragSource(
+            <div className={isDragging ? classes.handlerMove : classes.handler}>
+                <Typography variant="overline">{title}</Typography>
+            </div>
+        );
+        const opacity = isDragging ? 0 : 1;
+        const preview = (key: string, title: string) => {
+            return connectDragPreview(connectDropTarget(
+                <div key={key} style={ {opacity} }>
+                    <Paper className={classes.paper}>
+                        <Grid className={classes.columnHeader} item container direction="row"
+                              justify="space-between">
+                            <Grid item>
+                                {handler(title)}
                             </Grid>
-                        </Paper>
-                </div>)
+                            <Grid item>
+                                <EditMenu menuItems={columnEditMenu}/>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </div>
+            ))
         };
         return (
             <Grid item container direction="column" xs>
-                {preview(key, title, sequence)}
+                {preview(key, title)}
             </Grid>
         );
     }
 }
 
-export default flow(DragSource(Types.COLUMN, columnSource, collect), withStyles(projectColumnStyles))(ProjectColumn);
+export default flow(
+    DragSource(DnDTypes.COLUMN, columnSource, collect),
+    DropTarget(DnDTypes.COLUMN, columnTarget, collectTargets),
+    withStyles(projectColumnStyles)
+)(ProjectColumn);
