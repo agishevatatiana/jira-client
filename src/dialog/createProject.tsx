@@ -7,23 +7,18 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Project } from "../models/models";
-
-type CreateProjectProps = {
-    isOpen: boolean,
-    onClose: Function,
-}
+import { CreateProps, Project } from '../models/models';
 
 type CreateProjectState = {
     randomNum: string,
     newProjectData: Project,
     isCreateDisabled: boolean,
-    errors: {}
+    errors: object
 }
 
-class CreateProject extends Component<CreateProjectProps, CreateProjectState> {
+class CreateProject extends Component<CreateProps, CreateProjectState> {
     defaultState: CreateProjectState = {
-        randomNum: '0',
+        randomNum: '0', // todo I can use Symbol in future
         newProjectData: {
             name: '',
             project_key: '',
@@ -32,7 +27,7 @@ class CreateProject extends Component<CreateProjectProps, CreateProjectState> {
         isCreateDisabled: true,
         errors: {}
     };
-    constructor(createProjectProps: CreateProjectProps) {
+    constructor(createProjectProps: CreateProps) {
         super(createProjectProps);
         this.state = this.defaultState;
     }

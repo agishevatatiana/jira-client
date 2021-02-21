@@ -24,6 +24,7 @@ import Navbar from './components/Navbar';
 
 //utils
 import AuthRoute from './utils/AuthRoute';
+import { routerPath } from "./models/constants";
 
 // authentication code
 let authenticated = false;
@@ -48,6 +49,8 @@ const theme = createMuiTheme({
   }
 });
 
+const { defaultPath, loginPath, signupPath, projectPath } = routerPath;
+
 const App = () => (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
@@ -55,10 +58,10 @@ const App = () => (
           <Navbar/>
           <Container className="container">
             <Switch>
-              <Route exact path='/' component={projects}/>
-              <Route exact path='/project/:projectKey' component={project} />
-              <AuthRoute exact path='/login' component={login} authenticated={authenticated}/>
-              <AuthRoute exact path='/signup' component={signup} authenticated={authenticated}/>
+              <Route exact path={defaultPath} component={projects}/>
+              <Route exact path={projectPath} component={project} />
+              <AuthRoute exact path={loginPath} component={login} authenticated={authenticated}/>
+              <AuthRoute exact path={signupPath} component={signup} authenticated={authenticated}/>
             </Switch>
           </Container>
         </Router>
