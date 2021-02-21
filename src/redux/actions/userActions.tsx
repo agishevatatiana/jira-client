@@ -1,8 +1,9 @@
 import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from "../types";
 import axios from "axios";
 
-export const loginUser = (userData) => async (dispatch, history) => {
+export const loginUser = (userData: any) => async (dispatch: any, history: any) => {
     dispatch({ type: LOADING_UI });
+
     try {
         const token = await axios.post('/login', userData);
         const FBIdToken = `Bearer ${token.data}`;
@@ -11,7 +12,7 @@ export const loginUser = (userData) => async (dispatch, history) => {
         dispatch(getUserData());
         dispatch({ type: CLEAR_ERRORS });
        // this.setState({loading: false});
-        history.push('/')
+        history.push('/');
     } catch (err) {
         // this.setState({errors: err.response.data, loading: false});
         dispatch({
@@ -21,7 +22,7 @@ export const loginUser = (userData) => async (dispatch, history) => {
     }
 };
 
-export const getUserData = () => async (dispatch) => {
+export const getUserData = () => async (dispatch: any) => {
     try {
         const user = await axios.get('/user');
         dispatch({
