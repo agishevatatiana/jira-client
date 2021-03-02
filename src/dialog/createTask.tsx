@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import {
     FormControl,
     InputLabel,
@@ -20,6 +20,7 @@ import { formsStyles } from "../styles/forms-styles";
 import { displayStyles } from "../styles/displays";
 import { indentsStyles } from "../styles/indents";
 import { typographyStyles } from "../styles/typography";
+import TextEditor from "../components/TextEditor";
 
 type CreateTaskState = {
     newTaskData: Task,
@@ -51,7 +52,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
     render() {
         const { newTaskData, projects, isCreateDisabled } = this.state;
         const { isOpen, onClose, projectKey, classes } = this.props;
-        const { selectField, block, marginBottom, toCapitalize } = classes;
+        const { selectField, block, textMb, lineMb, toCapitalize } = classes;
         const { project_key, reporter, summary, description } = newTaskData;
 
 
@@ -80,7 +81,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
         const issueTypeSelect = issueTypes.map((type, index) => (
             <option key={index} value={type}>{type}</option>
         ));
-        const rowClass = `${block} ${marginBottom}`;
+        const rowClass = `${block} ${lineMb}`;
         const selectClass = `${toCapitalize} ${selectField}`;
 
         return (
@@ -114,19 +115,25 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                         onFocus={createRandomNum}
                         onChange={handleNameChange}
                     */}
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="summary"
-                        name='summary'
-                        type='text'
-                        label='Summary'
-                        value={summary}
-                        fullWidth
-                    />
+                    <FormControl required className={rowClass}>
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="summary"
+                            name='summary'
+                            type='text'
+                            label='Summary'
+                            value={summary}
+                            fullWidth
+                        />
+                    </FormControl>
 
                     {/*  Description - text editor  */}
+                    <InputLabel className={textMb}>Description</InputLabel>
+                    <TextEditor/>
+
+
                     {/*  Assignee - selector with users  */}
                     {/*  Reporter - reporter  */}
                     {/*  Priority* - selector with priority type  */}

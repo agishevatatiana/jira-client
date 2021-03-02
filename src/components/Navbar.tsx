@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, createRef } from "react";
 import { Link } from 'react-router-dom';
 import { withRouter, matchPath } from 'react-router';
 
@@ -108,6 +108,9 @@ class Navbar extends Component<WithRouterProps, NavbarState> {
             </div>;
 
         // open create forms in dialog windows
+        // todo: rewrite this dialogs to react refs, might help to read
+        // https://github.com/styled-components/styled-components/issues/2154
+        // https://medium.com/trabe/getting-rid-of-finddomnode-method-in-your-react-application-a0d7093b2660
         const dialogByRoute = projectKey
             ? <CreateTask isOpen={isCreateOpened} projectKey={projectKey} onClose={handleCreateProjectClose} />
             : <CreateProject isOpen={isCreateOpened} onClose={handleCreateProjectClose}/>;
