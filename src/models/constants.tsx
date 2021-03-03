@@ -1,4 +1,5 @@
 // dnd
+import { string } from "prop-types";
 import { taskType } from "./models";
 
 export const DnDTypes = {
@@ -15,17 +16,17 @@ export const routerPath = {
 
 export const issueTypes: taskType[] = ['epic', 'story', 'task', 'improvement', 'bug'];
 
-type textEditorOptions = { title: string, value: string };
-const createOption = (title: string, value: string): textEditorOptions => ({ title, value });
+type textEditorOptions = { title: string, value: string, classStr: string };
+const createOption = (title: string, value: string, classStr: string): textEditorOptions => ({ title, value, classStr });
 
 export const editTextOptions: textEditorOptions[] = [
-    createOption(`<h1>Heading 1</h1>`, 'h1'),
-    createOption(`<h2>Heading 2</h2>`, 'h2'),
-    createOption(`<h3>Heading 3</h3>`, 'h3'),
-    createOption(`<h4>Heading 4</h4>`, 'h4'),
-    createOption(`<h5>Heading 5</h5>`, 'h5'),
-    createOption(`<h6>Heading 6</h6>`, 'h6'),
-    createOption(`<p>Normal Text</p>`, 'p'),
+    createOption('Heading 1', 'h1', 'optH1'),
+    createOption('Heading 2', 'h2', 'optH2'),
+    createOption( 'Heading 3', 'h3', 'optH3'),
+    createOption( 'Heading 4', 'h4', 'optH4'),
+    createOption( 'Heading 5', 'h5', 'optH5'),
+    createOption( 'Heading 6', 'h6', 'optH6'),
+    createOption( 'Normal Text', 'p', 'optP'),
 ];
 
 // export const editColorOptions: textEditorOptions[] = {

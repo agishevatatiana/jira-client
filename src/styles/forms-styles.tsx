@@ -15,7 +15,7 @@ export const formsStyles: Styles<any, any> = {
         margin: '35px 0 15px'
     },
     customError: {
-        color: '#f44336'
+        color: '#f44336' // todo use theme.palette.error.main
     },
     smallInfo: {
         padding: '0 0 35px'

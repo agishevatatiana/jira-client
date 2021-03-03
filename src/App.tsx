@@ -46,7 +46,9 @@ const theme = createMuiTheme({
   palette: {
     primary: indigo,
     secondary: blue
-  }
+  },
+  typography: {},
+
 });
 
 const { defaultPath, loginPath, signupPath, projectPath } = routerPath;
