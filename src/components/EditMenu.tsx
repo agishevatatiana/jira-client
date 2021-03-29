@@ -11,7 +11,7 @@ type EditMenuProps = {
     classes: any
 }
 
-function EditMenu(props: EditMenuProps) {
+const EditMenu = (props: EditMenuProps) => {
     const { menuItems, classes } = props;
     const [open, setOpen] = useState(false);
     const anchorRef = useRef<HTMLButtonElement>(null);

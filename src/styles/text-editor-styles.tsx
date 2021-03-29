@@ -15,5 +15,9 @@ export const textEditorStyles: any = (theme: Theme) => ({
         minHeight: '100px',
         padding: '10px',
         cursor: 'text',
+    },
+
+    selectControlsList: {
+        left: '-60px !important'
     }
 });

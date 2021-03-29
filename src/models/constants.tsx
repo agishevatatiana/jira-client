@@ -1,5 +1,6 @@
 // dnd
-import { string } from "prop-types";
+import { Code, FormatBold, FormatItalic, FormatUnderlined } from '@material-ui/icons';
+import React, { CElement } from 'react';
 import { taskType } from "./models";
 
 export const DnDTypes = {
@@ -16,21 +17,31 @@ export const routerPath = {
 
 export const issueTypes: taskType[] = ['epic', 'story', 'task', 'improvement', 'bug'];
 
-type textEditorOptions = { title: string, value: string, classStr: string };
-const createOption = (title: string, value: string, classStr: string): textEditorOptions => ({ title, value, classStr });
+export type textEditorOption = { value: string, style: string, title?: string, optionClass?: string };
+const createOption = (value: string, style: string, title?: string, optionClass?: string): textEditorOption => ({ title, value, optionClass, style });
 
-export const editTextOptions: textEditorOptions[] = [
-    createOption('Heading 1', 'h1', 'optH1'),
-    createOption('Heading 2', 'h2', 'optH2'),
-    createOption( 'Heading 3', 'h3', 'optH3'),
-    createOption( 'Heading 4', 'h4', 'optH4'),
-    createOption( 'Heading 5', 'h5', 'optH5'),
-    createOption( 'Heading 6', 'h6', 'optH6'),
-    createOption( 'Normal Text', 'p', 'optP'),
+export const editTextOptions: textEditorOption[] = [
+    createOption( 'h1','header-one' , 'Heading 1', 'optH1'),
+    createOption( 'h2', 'header-two', 'Heading 2','optH2'),
+    createOption( 'h3', 'header-three', 'Heading 3','optH3'),
+    createOption( 'h4', 'header-four', 'Heading 4', 'optH4'),
+    createOption( 'h5', 'header-five', 'Heading 5', 'optH5'),
+    createOption( 'h6', 'header-six', 'Heading 6', 'optH6'),
+    createOption( 'p',  'paragraph', 'Normal Text', 'optP')
 ];
 
-// export const editColorOptions: textEditorOptions[] = {
-//
-// };
+export const editTextIcons: {[key: string]: CElement<any, any>} = {
+    bold: <FormatBold/>,
+    italic: <FormatItalic/>,
+    underline: <FormatUnderlined/>,
+    monospace: <Code/>
+};
 
-// export const editFormatOptions
+export const editTextButtons: textEditorOption[] = [
+    createOption('bold', 'BOLD'),
+    createOption('italic', 'ITALIC'),
+    createOption('underline', 'UNDERLINE'),
+    createOption('monospace', 'CODE'),
+];
+
+

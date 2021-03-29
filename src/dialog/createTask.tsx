@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import {
     FormControl,
     InputLabel,
@@ -12,20 +12,22 @@ import {
     withStyles,
     TextField
 } from "@material-ui/core";
+import { convertToRaw } from 'draft-js';
 
 import { CreateProps, Project, Task } from "../models/models";
 import { projectsMock } from "../mocks/mocks";
 import { issueTypes } from "../models/constants";
 import { formsStyles } from "../styles/forms-styles";
-import { displayStyles } from "../styles/displays";
+import { blockStyles } from "../styles/block-styles";
 import { indentsStyles } from "../styles/indents";
 import { typographyStyles } from "../styles/typography";
-import TextEditor from "../components/TextEditor";
+import TextEditor from "../components/text-editor/TextEditor";
 
 type CreateTaskState = {
     newTaskData: Task,
     projects: Project[],
     isCreateDisabled: boolean,
+    isSubmitAction: boolean,
     errors: object
 }
 class CreateTask extends Component<CreateProps, CreateTaskState> {
@@ -39,6 +41,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
             summary: '',
             sequence: 0,
         },
+        isSubmitAction: false,
         projects: projectsMock,
         isCreateDisabled: true,
         errors: {}
@@ -50,7 +53,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
     }
 
     render() {
-        const { newTaskData, projects, isCreateDisabled } = this.state;
+        const { newTaskData, projects, isCreateDisabled, isSubmitAction } = this.state;
         const { isOpen, onClose, projectKey, classes } = this.props;
         const { selectField, block, textMb, lineMb, toCapitalize } = classes;
         const { project_key, reporter, summary, description } = newTaskData;
@@ -62,13 +65,19 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
         };
 
         const handleCreateTask = async() => {
+            this.setState({ isSubmitAction: true });
+
+            setTimeout(() => {
+                this.setState({ isSubmitAction: false });
+            }, 3000);
+           // console.log();
             // try {
             //     const projectRes = await axios.post('/task', this.state.newTaskData);
             // } catch (err) {
             //     console.log('/task failed: ', err);
             //     this.setState({ errors: err.message });
             // }
-            handleClose();
+         //   ;
         };
 
         const handleEditorChange = (event: any) => {
@@ -83,6 +92,10 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
         ));
         const rowClass = `${block} ${lineMb}`;
         const selectClass = `${toCapitalize} ${selectField}`;
+
+        const handleGetDescription = (event: any): any => {
+            console.log('description update: ', JSON.stringify(convertToRaw(event)));
+        }
 
         return (
             <Dialog fullWidth maxWidth="md" open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -131,12 +144,13 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
 
                     {/*  Description - text editor  */}
                     <InputLabel className={textMb}>Description</InputLabel>
-                    <TextEditor/>
+                    <TextEditor isSubmitAction={isSubmitAction} description={handleGetDescription} />
 
 
                     {/*  Assignee - selector with users  */}
                     {/*  Reporter - reporter  */}
-                    {/*  Priority* - selector with priority type  */}
+                    {/*  Priority* - selector with priority type
+                    disabled={isCreateDisabled}*/}
                 </DialogContent>
                 <DialogContentText>
 
@@ -145,7 +159,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleCreateTask} disabled={isCreateDisabled} color="primary">
+                    <Button onClick={handleCreateTask} color="primary">
                         Create
                     </Button>
                 </DialogActions>
@@ -154,4 +168,4 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
     }
 }
 
-export default withStyles({ ...formsStyles, ...displayStyles, ...indentsStyles, ...typographyStyles })(CreateTask);
+export default withStyles({ ...formsStyles, ...blockStyles, ...indentsStyles, ...typographyStyles })(CreateTask);
