@@ -1,5 +1,13 @@
-// dnd
-import { Code, FormatBold, FormatItalic, FormatUnderlined } from '@material-ui/icons';
+import {
+    Code,
+    FormatBold,
+    FormatItalic,
+    FormatUnderlined,
+    Reorder,
+    FormatListBulleted,
+    FormatListNumbered,
+    FormatQuote
+} from '@material-ui/icons';
 import React, { CElement } from 'react';
 import { taskType } from "./models";
 
@@ -34,14 +42,25 @@ export const editTextIcons: {[key: string]: CElement<any, any>} = {
     bold: <FormatBold/>,
     italic: <FormatItalic/>,
     underline: <FormatUnderlined/>,
-    monospace: <Code/>
+    monospace: <Reorder/>,
+    code: <Code/>,
+    ul: <FormatListBulleted />,
+    ol: <FormatListNumbered />,
+    blockquote: <FormatQuote />
 };
 
-export const editTextButtons: textEditorOption[] = [
+export const editTextButtonsInline: textEditorOption[] = [
     createOption('bold', 'BOLD'),
     createOption('italic', 'ITALIC'),
     createOption('underline', 'UNDERLINE'),
     createOption('monospace', 'CODE'),
+];
+
+export const editTextButtonsBlock: textEditorOption[] = [
+    createOption('code', 'code-block'),
+    createOption('ul', 'unordered-list-item'),
+    createOption('ol', 'ordered-list-item'),
+    createOption('blockquote', 'blockquote'),
 ];
 
 

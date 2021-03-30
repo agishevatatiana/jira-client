@@ -17,7 +17,7 @@ import { editTextOptions, textEditorOption } from '../../models/constants';
 import { StyledToggleButtonGroup } from '../../utils/StyledToggleButtonGroup';
 
 const SelectorControls = (props: any) => {
-    const { classes, onToggle } = props;
+    const { classes, onToggle, editorState } = props;
     const { relative, selectControlsList } = classes;
     const anchorRef = useRef<HTMLButtonElement>(null);
 
@@ -31,23 +31,36 @@ const SelectorControls = (props: any) => {
         event: any,
         index: number,
         option: textEditorOption
-    ) => {
+    ): void => {
         onToggle(option.style);
         setSelectedIndex(index);
         setOpen(false);
     };
 
-    const handleOpen = () => {
+    const handleOpen = (): void => {
         setOpen(true);
     };
 
-    const handleClose = (event: any) => {
+    const handleClose = (event: any): void => {
         const target: any = event.target;
         if (anchorRef.current && anchorRef.current.contains(target)) {
             return;
         }
 
         setOpen(false);
+    };
+
+    // todo: catch the event when cursor change line on the editor and update selected value regarding data
+    const setSelected = (option: textEditorOption, index: number): void => {
+        const selection = editorState.getSelection();
+        const blockType = editorState
+            .getCurrentContent()
+            .getBlockForKey(selection.getStartKey())
+            .getType();
+
+        if (blockType === 'unstyled') return;
+
+        if (option.style === blockType) setSelectedIndex(index);
     };
 
     return (

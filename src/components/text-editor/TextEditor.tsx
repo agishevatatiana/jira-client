@@ -6,19 +6,12 @@ import {
     Theme,
     withStyles
 } from "@material-ui/core";
-import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
-import {
-    FormatBold,
-    FormatItalic,
-    FormatUnderlined,
-    FormatColorFill,
-    ArrowDropDown
-} from "@material-ui/icons";
 
 import { blockStyles } from "../../styles/block-styles";
 import { textEditorStyles } from "../../styles/text-editor-styles";
 import { typographyStyles } from "../../styles/typography";
-import ButtonControls from './ButtonControls';
+import ButtonBlockControls from './ButtonBlockControls';
+import ButtonInlineControls from './ButtonInlineControls';
 import SelectorControls from './SelectorControls';
 
 const TextEditor = (props: any) => {
@@ -65,7 +58,11 @@ const TextEditor = (props: any) => {
                     onToggle={handleBlockStyles}
                 />
                 <Divider flexItem orientation="vertical" className={divider} />
-                <ButtonControls
+                <ButtonBlockControls
+                    editorState={editorState}
+                    onToggle={handleBlockStyles}
+                />
+                <ButtonInlineControls
                     editorState={editorState}
                     onToggle={handleInlineStyles}
                 />

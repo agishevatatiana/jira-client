@@ -94,8 +94,8 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
         const selectClass = `${toCapitalize} ${selectField}`;
 
         const handleGetDescription = (event: any): any => {
-            console.log('description update: ', JSON.stringify(convertToRaw(event)));
-        }
+            console.log('description update: ', convertToRaw(event));
+        };
 
         return (
             <Dialog fullWidth maxWidth="md" open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -150,7 +150,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                     {/*  Assignee - selector with users  */}
                     {/*  Reporter - reporter  */}
                     {/*  Priority* - selector with priority type
-                    disabled={isCreateDisabled}*/}
+                    */}
                 </DialogContent>
                 <DialogContentText>
 
@@ -159,7 +159,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleCreateTask} color="primary">
+                    <Button disabled={isCreateDisabled} onClick={handleCreateTask} color="primary">
                         Create
                     </Button>
                 </DialogActions>
