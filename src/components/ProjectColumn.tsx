@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import { Column, DnDTypes } from "../models/models";
+import { Column } from "../models/models";
+import { DnDTypes } from "../models/constants";
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core';
 import { DragLayerMonitor, DragSource, DropTarget, DropTargetMonitor } from "react-dnd"

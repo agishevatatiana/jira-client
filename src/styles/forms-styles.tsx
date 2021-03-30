@@ -8,11 +8,14 @@ export const formsStyles: Styles<any, any> = {
         width: '100%',
         margin: '15px 0'
     },
+    selectField: {
+        width: '250px'
+    },
     button: {
         margin: '35px 0 15px'
     },
     customError: {
-        color: '#f44336'
+        color: '#f44336' // todo use theme.palette.error.main
     },
     smallInfo: {
         padding: '0 0 35px'

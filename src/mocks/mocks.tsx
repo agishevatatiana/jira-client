@@ -1,11 +1,11 @@
-import { Column, Project, User } from "../models/models";
+import { Column, Project, Task, taskStatus, taskType, User } from "../models/models";
 import ProjectColumn from "../components/ProjectColumn";
 
 // projects
 const createMockProjects = (key: string | undefined, project_key: string, lead: string, name: string): Project => ({
     key, project_key, lead, name
 });
-export const projectsMock = [
+export const projectsMock: Project[] = [
     createMockProjects('0', 'mock-project-0', 'creatorId', 'Mock Project'),
     createMockProjects('1', 'mock-project-1', 'creatorId', 'Mock Project 1'),
     createMockProjects('2', 'mock-project-2', 'creatorId', 'Mock Project 2'),
@@ -63,4 +63,20 @@ export const defaultColumns: Column[] = [
 ];
 
 // tasks
-const createTask = () => ({});
+export const createMockTask = (
+    key: string,
+    project_key: string,
+    reporter: string,
+    description: string,
+    type: taskType,
+    summary: string,
+    sequence: number,
+    status?: taskStatus
+): Task => ({key, project_key, reporter, description, type, summary, sequence, status: status || 'to_do'});
+
+export const tasksMock: Task[] = [
+    createMockTask('000', '0', '03', 'test description 1', 'task', 'test summary 1', 0),
+    createMockTask('001', '0', '01', 'test description 2', 'task', 'test summary 2', 1),
+    createMockTask('002', '0', '01', 'test description 3', 'task', 'test summary 3', 2),
+    createMockTask('003', '0', '01', 'test description 4', 'bug', 'test summary 4', 3)
+];
