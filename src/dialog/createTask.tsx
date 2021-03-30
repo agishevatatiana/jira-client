@@ -168,4 +168,5 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
     }
 }
 
+// todo: send classes to text editor as props
 export default withStyles({ ...formsStyles, ...blockStyles, ...indentsStyles, ...typographyStyles })(CreateTask);
