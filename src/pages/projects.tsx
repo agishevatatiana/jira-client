@@ -1,5 +1,3 @@
-// https://github.com/minwe/jetbrains-react
-
 import React, {Component} from 'react';
 
 import Table from '@material-ui/core/Table';

@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core';
+import { Theme, withStyles } from '@material-ui/core';
 import { formsStyles } from '../styles/forms-styles';
 
 type SignUpProps = {
@@ -142,4 +142,4 @@ class signup extends Component<SignUpProps, SignUpState> {
     }
 }
 
-export default withStyles(formsStyles)(signup);
+export default withStyles((theme: Theme) => formsStyles(theme))(signup);

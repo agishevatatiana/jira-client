@@ -9,6 +9,10 @@ export const blockStyles: Styles<any, any> = {
         display: 'flex'
     },
 
+    hide: {
+        display: 'none'
+    },
+
     relative: {
         position: 'relative'
     }

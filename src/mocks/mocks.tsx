@@ -1,4 +1,4 @@
-import { Column, Project, Task, taskStatus, taskType, User } from "../models/models";
+import { Column, priorityType, Project, Task, taskStatus, taskType, User } from '../models/models';
 import ProjectColumn from "../components/ProjectColumn";
 
 // projects
@@ -16,7 +16,7 @@ export const getProjectByKey = (key: string | null) => projectsMock.find(project
 // *** projects
 
 // users
-const createMockUsers = (
+export const createMockUsers = (
     key: string,
     email: string,
     full_name: string,
@@ -51,6 +51,10 @@ export const usersMock = [
     createMockUsers('05', 'test6@.gmail.com', 'test6 test', { '0': true, '1': true, '2': true }),
 ];
 
+export const getUserById = (key: string | undefined, users: (User | undefined)[] = usersMock): User | undefined => {
+    return (users || []).find((user: any) => user.key === key);
+};
+
 export const getUsersByProjectKey = (key: string): User[] => usersMock.filter(user => (user.project_keys || {})[key]);
 // *** users
 
@@ -71,12 +75,13 @@ export const createMockTask = (
     type: taskType,
     summary: string,
     sequence: number,
+    priority: priorityType,
     status?: taskStatus
-): Task => ({key, project_key, reporter, description, type, summary, sequence, status: status || 'to_do'});
+): Task => ({key, project_key, reporter, description, type, summary, sequence, priority, status: status || 'to_do'});
 
 export const tasksMock: Task[] = [
-    createMockTask('000', '0', '03', 'test description 1', 'task', 'test summary 1', 0),
-    createMockTask('001', '0', '01', 'test description 2', 'task', 'test summary 2', 1),
-    createMockTask('002', '0', '01', 'test description 3', 'task', 'test summary 3', 2),
-    createMockTask('003', '0', '01', 'test description 4', 'bug', 'test summary 4', 3)
+    createMockTask('000', '0', '03', 'test description 1', 'Task', 'test summary 1', 0, 'Medium'),
+    createMockTask('001', '0', '01', 'test description 2', 'Task', 'test summary 2', 1, 'High'),
+    createMockTask('002', '0', '01', 'test description 3', 'Task', 'test summary 3', 2, 'Medium'),
+    createMockTask('003', '0', '01', 'test description 4', 'Bug', 'test summary 4', 3, 'Low')
 ];

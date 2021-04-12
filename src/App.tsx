@@ -40,7 +40,7 @@ if (token) {
     authenticated = true;
   }
 }
-
+// https://github.com/minwe/jetbrains-react
 // https://material-ui.com/customization/color/
 const theme = createMuiTheme({
   palette: {

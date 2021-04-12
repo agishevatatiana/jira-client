@@ -8,8 +8,6 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import UsersList from '../components/UsersList';
 import DndProjectColumns from '../components/DndProjectColumns';
 
-
-
 type ProjectState = {
     project: Project | null;
     users: User[];
@@ -27,7 +25,7 @@ class project extends Component<MatchProps, ProjectState> {
         };
     }
 
-    async getDataByProjectKey(projectKey: string) {
+    getDataByProjectKey(projectKey: string) {
         this.setState({
             project: getProjectByKey(projectKey) || null,
             users: getUsersByProjectKey(projectKey) || []

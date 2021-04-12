@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react';
 import { Link } from 'react-router-dom';
 
-import { withStyles } from "@material-ui/core";
+import { Theme, withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -114,4 +114,4 @@ class login extends Component<LoginProps, LoginState> {
     }
 }
 
-export default withStyles(formsStyles)(login);
+export default withStyles((theme: Theme) => formsStyles(theme))(login);

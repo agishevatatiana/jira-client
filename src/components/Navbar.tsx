@@ -10,6 +10,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import CreateProject from "../dialog/createProject";
+import { usersMock } from '../mocks/mocks';
 import { WithRouterProps } from "../models/models";
 import { routerPath } from "../models/constants";
 import CreateTask from "../dialog/createTask";
@@ -112,8 +113,8 @@ class Navbar extends Component<WithRouterProps, NavbarState> {
         // https://github.com/styled-components/styled-components/issues/2154
         // https://medium.com/trabe/getting-rid-of-finddomnode-method-in-your-react-application-a0d7093b2660
         const dialogByRoute = projectKey
-            ? <CreateTask isOpen={isCreateOpened} projectKey={projectKey} onClose={handleCreateProjectClose} />
-            : <CreateProject isOpen={isCreateOpened} onClose={handleCreateProjectClose}/>;
+            ? <CreateTask isOpen={isCreateOpened} projectKey={projectKey} currentUser={usersMock[0]} onClose={handleCreateProjectClose} />
+            : <CreateProject isOpen={isCreateOpened} projectKey={projectKey} onClose={handleCreateProjectClose}/>;
 
         const createDialog = isCreateOpened ? dialogByRoute : '';
         // ----open create forms in dialog windows
