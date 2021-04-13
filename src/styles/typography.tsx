@@ -1,4 +1,4 @@
-import { Theme } from "@material-ui/core";
+import { Theme } from '@material-ui/core';
 
 export const typographyStyles: any = (theme: Theme) => ({
     toCapitalize: {

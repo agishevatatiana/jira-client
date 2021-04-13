@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import { MatchProps, Project, User } from "../models/models";
+import { MatchProps, Project, User } from '../models/models';
 import { getProjectByKey, getUsersByProjectKey } from '../mocks/mocks';
 import Breadcrumbs from '../components/Breadcrumbs';
 import UsersList from '../components/UsersList';

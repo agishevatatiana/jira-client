@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
 import {
     Divider,
     Grid,
     Theme,
     withStyles
-} from "@material-ui/core";
+} from '@material-ui/core';
+import { Editor, EditorState, RichUtils } from 'draft-js';
 
-import { blockStyles } from "../../styles/block-styles";
-import { textEditorStyles } from "../../styles/text-editor-styles";
-import { typographyStyles } from "../../styles/typography";
+import { blockStyles, textEditorStyles, typographyStyles } from '../../styles';
 import ButtonBlockControls from './ButtonBlockControls';
 import ButtonInlineControls from './ButtonInlineControls';
 import SelectorControls from './SelectorControls';

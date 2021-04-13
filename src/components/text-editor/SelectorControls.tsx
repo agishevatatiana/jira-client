@@ -1,17 +1,14 @@
+import React, { useRef, useState } from 'react';
 import {
-    Button, ButtonGroup,
+    Button,
     ClickAwayListener,
     IconButton,
     MenuItem,
     MenuList,
     Paper,
-    Popper,
-    withStyles
+    Popper
 } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import React, { useRef, useState } from 'react';
 
 import { editTextOptions, textEditorOption } from '../../models/constants';
 import { StyledToggleButtonGroup } from '../../utils/StyledToggleButtonGroup';

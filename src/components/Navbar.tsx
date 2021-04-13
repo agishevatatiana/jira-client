@@ -1,19 +1,15 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter, matchPath } from 'react-router';
 
-// https://material-ui.com/components/app-bar/
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
+import { AppBar, Toolbar, Button, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-import CreateProject from "../dialog/createProject";
+import CreateProject from '../dialog/createProject';
+import CreateTask from '../dialog/createTask';
 import { usersMock } from '../mocks/mocks';
-import { WithRouterProps } from "../models/models";
-import { routerPath } from "../models/constants";
-import CreateTask from "../dialog/createTask";
+import { WithRouterProps } from '../models/models';
+import { routerPath } from '../models/constants';
 
 type NavbarState = {
     authenticated: boolean;

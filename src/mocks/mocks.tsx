@@ -1,5 +1,4 @@
 import { Column, priorityType, Project, Task, taskStatus, taskType, User } from '../models/models';
-import ProjectColumn from "../components/ProjectColumn";
 
 // projects
 const createMockProjects = (key: string | undefined, project_key: string, lead: string, name: string): Project => ({

@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-
-import { Column } from "../models/models";
-import { DnDTypes } from "../models/constants";
-import { Grid, Paper, Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/core';
-import { DragLayerMonitor, DragSource, DropTarget, DropTargetMonitor } from "react-dnd"
+import React, { Component } from 'react';
+import { Grid, Paper, Typography, withStyles } from '@material-ui/core';
+import { DragLayerMonitor, DragSource, DropTarget, DropTargetMonitor } from 'react-dnd';
 import { flow } from 'lodash';
 
+import { Column } from '../models/models';
+import { DnDTypes } from '../models/constants';
 import EditMenu from './EditMenu';
-import { projectColumnStyles } from '../styles/project-column-styles';
+import { projectColumnStyles } from '../styles';
 
 // todo: 1) fix problem with strange shadow behavior with dnd
 //  2) fix cursor handlerMove using react-dnd effects

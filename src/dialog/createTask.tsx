@@ -20,11 +20,8 @@ import { delay } from 'lodash';
 import { CreateProps, priorityType, Project, Task, taskType, User } from '../models/models';
 import { getUserById, getUsersByProjectKey, projectsMock } from '../mocks/mocks';
 import { issueTypes, priorities, priorityIcons, unassignedUser } from '../models/constants';
-import { formsStyles } from "../styles/forms-styles";
-import { blockStyles } from "../styles/block-styles";
-import { indentsStyles } from "../styles/indents";
-import { typographyStyles } from "../styles/typography";
-import TextEditor from "../components/text-editor/TextEditor";
+import { formsStyles, blockStyles, indentsStyles, typographyStyles } from '../styles';
+import TextEditor from '../components/text-editor/TextEditor';
 import SearchInSelect from '../components/SearchInSelect';
 
 type CreateTaskState = {

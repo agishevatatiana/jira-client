@@ -1,4 +1,4 @@
-import { Theme } from "@material-ui/core";
+import { Theme } from '@material-ui/core';
 
 export const formsStyles: any = (theme: Theme) => ({
     form: {
