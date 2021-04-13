@@ -1,8 +1,7 @@
 import React, {useState, useRef, MouseEvent} from 'react';
 import PropTypes from 'prop-types';
-import { ClickAwayListener, IconButton, MenuItem, MenuList, Paper, Popper, Typography } from '@material-ui/core';
+import { ClickAwayListener, IconButton, MenuItem, MenuList, Paper, Popper, Typography, withStyles } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import { withStyles } from '@material-ui/core';
 
 import { editMenuStyles } from '../styles/edit-menu-styles';
 
@@ -56,7 +55,7 @@ const EditMenu = (props: EditMenuProps) => {
             </Popper>
         </div>
     );
-}
+};
 
 EditMenu.propTypes = {
     menuItems: PropTypes.array.isRequired

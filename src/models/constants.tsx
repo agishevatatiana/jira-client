@@ -1,3 +1,4 @@
+import React, { CElement } from 'react';
 import {
     Code,
     FormatBold,
@@ -6,10 +7,16 @@ import {
     Reorder,
     FormatListBulleted,
     FormatListNumbered,
-    FormatQuote
+    FormatQuote,
+    ArrowUpward,
+    ArrowDownward
 } from '@material-ui/icons';
-import React, { CElement } from 'react';
-import { taskType } from "./models";
+import red from '@material-ui/core/colors/red';
+import orange from '@material-ui/core/colors/orange';
+import green from '@material-ui/core/colors/green';
+
+import { createMockUsers } from '../mocks/mocks';
+import { priorityType, taskStatus, taskType } from './models';
 
 export const DnDTypes = {
     COLUMN: 'column',
@@ -23,7 +30,12 @@ export const routerPath = {
     projectPath: '/project/:projectKey'
 };
 
-export const issueTypes: taskType[] = ['epic', 'story', 'task', 'improvement', 'bug'];
+export const issueTypes: taskType[] = ['Epic', 'Story', 'Task', 'Improvement', 'Bug'];
+export const taskStatuses: {status: taskStatus, name: string}[] = [
+    { status: 'to_do', name: 'To Do' },
+    { status: 'in_progress', name: 'In Progress' },
+    { status: 'done', name: 'Done' }
+    ];
 
 export type textEditorOption = { value: string, style: string, title?: string, optionClass?: string };
 const createOption = (value: string, style: string, title?: string, optionClass?: string): textEditorOption => ({ title, value, optionClass, style });
@@ -63,4 +75,14 @@ export const editTextButtonsBlock: textEditorOption[] = [
     createOption('blockquote', 'blockquote'),
 ];
 
+export const unassignedUser = createMockUsers('000000', 'Unassigned', 'Unassigned', {});
 
+export const priorities: priorityType[] = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
+
+export const priorityIcons = (setIndents: string): {[key: string]: CElement<any, any>} => ({
+    Highest: <ArrowUpward className={setIndents} style={{ color: red[700] }} />,
+    High: <ArrowUpward className={setIndents} style={{ color: red[400] }} />,
+    Medium: <ArrowUpward className={setIndents} style={{ color: orange[600] }} />,
+    Low: <ArrowDownward className={setIndents} style={{ color: green[700] }} />,
+    Lowest: <ArrowDownward className={setIndents} style={{ color: green[400] }} />,
+});

@@ -1,6 +1,6 @@
-import { Styles } from '@material-ui/styles/withStyles';
+import { Theme } from '@material-ui/core';
 
-export const formsStyles: Styles<any, any> = {
+export const formsStyles: any = (theme: Theme) => ({
     form: {
         textAlign: 'center'
     },
@@ -9,7 +9,7 @@ export const formsStyles: Styles<any, any> = {
         margin: '15px 0'
     },
     selectField: {
-        width: '250px'
+        width: '350px'
     },
     button: {
         margin: '35px 0 15px'
@@ -19,5 +19,9 @@ export const formsStyles: Styles<any, any> = {
     },
     smallInfo: {
         padding: '0 0 35px'
+    },
+    avatarSmall: {
+        width: theme.spacing(2.5),
+        height: theme.spacing(2.5),
     }
-};
+});

@@ -1,4 +1,4 @@
-import { Styles } from "@material-ui/styles/withStyles";
+import { Styles } from '@material-ui/styles/withStyles';
 
 export const blockStyles: Styles<any, any> = {
     block: {
@@ -7,6 +7,10 @@ export const blockStyles: Styles<any, any> = {
 
     flex: {
         display: 'flex'
+    },
+
+    hide: {
+        display: 'none'
     },
 
     relative: {

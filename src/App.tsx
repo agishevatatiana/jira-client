@@ -24,7 +24,7 @@ import Navbar from './components/Navbar';
 
 //utils
 import AuthRoute from './utils/AuthRoute';
-import { routerPath } from "./models/constants";
+import { routerPath } from './models/constants';
 
 // authentication code
 let authenticated = false;
@@ -40,7 +40,7 @@ if (token) {
     authenticated = true;
   }
 }
-
+// https://github.com/minwe/jetbrains-react
 // https://material-ui.com/customization/color/
 const theme = createMuiTheme({
   palette: {

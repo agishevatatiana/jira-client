@@ -1,4 +1,4 @@
-import { Theme } from "@material-ui/core";
+import { Theme } from '@material-ui/core';
 
 export const textEditorStyles: any = (theme: Theme) => ({
     textEditorMenu: {
@@ -12,7 +12,7 @@ export const textEditorStyles: any = (theme: Theme) => ({
         borderTop: 0,
         flexWrap: 'wrap',
         borderRadius: '0 0 4px 4px',
-        minHeight: '100px',
+        minHeight: '200px',
         padding: '10px',
         cursor: 'text',
     },

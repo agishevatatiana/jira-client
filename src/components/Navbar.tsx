@@ -1,18 +1,15 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter, matchPath } from 'react-router';
 
-// https://material-ui.com/components/app-bar/
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
+import { AppBar, Toolbar, Button, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-import CreateProject from "../dialog/createProject";
-import { WithRouterProps } from "../models/models";
-import { routerPath } from "../models/constants";
-import CreateTask from "../dialog/createTask";
+import CreateProject from '../dialog/createProject';
+import CreateTask from '../dialog/createTask';
+import { usersMock } from '../mocks/mocks';
+import { WithRouterProps } from '../models/models';
+import { routerPath } from '../models/constants';
 
 type NavbarState = {
     authenticated: boolean;
@@ -112,8 +109,8 @@ class Navbar extends Component<WithRouterProps, NavbarState> {
         // https://github.com/styled-components/styled-components/issues/2154
         // https://medium.com/trabe/getting-rid-of-finddomnode-method-in-your-react-application-a0d7093b2660
         const dialogByRoute = projectKey
-            ? <CreateTask isOpen={isCreateOpened} projectKey={projectKey} onClose={handleCreateProjectClose} />
-            : <CreateProject isOpen={isCreateOpened} onClose={handleCreateProjectClose}/>;
+            ? <CreateTask isOpen={isCreateOpened} projectKey={projectKey} currentUser={usersMock[0]} onClose={handleCreateProjectClose} />
+            : <CreateProject isOpen={isCreateOpened} projectKey={projectKey} onClose={handleCreateProjectClose}/>;
 
         const createDialog = isCreateOpened ? dialogByRoute : '';
         // ----open create forms in dialog windows

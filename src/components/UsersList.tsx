@@ -1,12 +1,9 @@
 import React, {Component, createRef} from 'react';
-import Fab from "@material-ui/core/Fab";
-import Avatar from "@material-ui/core/Avatar";
-import Tooltip from "@material-ui/core/Tooltip";
-import { withStyles } from "@material-ui/core";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import { Fab, Avatar, Tooltip, withStyles } from '@material-ui/core';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 import { User } from '../models/models';
-import { usersListStyles } from '../styles/users-list-styles';
+import { usersListStyles } from '../styles';
 
 type UsersListProps = {
     users: User[],
