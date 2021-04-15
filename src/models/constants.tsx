@@ -30,7 +30,7 @@ export const routerPath = {
     projectPath: '/project/:projectKey'
 };
 
-export const issueTypes: taskType[] = ['Epic', 'Story', 'Task', 'Improvement', 'Bug'];
+export const issueTypes: taskType[] = ['Epic', 'Story', 'Task', 'Bug'];
 export const taskStatuses: {status: taskStatus, name: string}[] = [
     { status: 'to_do', name: 'To Do' },
     { status: 'in_progress', name: 'In Progress' },
@@ -86,3 +86,10 @@ export const priorityIcons = (setIndents: string): {[key: string]: CElement<any,
     Low: <ArrowDownward className={setIndents} style={{ color: green[700] }} />,
     Lowest: <ArrowDownward className={setIndents} style={{ color: green[400] }} />,
 });
+
+export const taskTypeIcons: {[key: string]: string} = {
+    Epic: `${process.env.PUBLIC_URL}/epic.svg`,
+    Story: `${process.env.PUBLIC_URL}/story.svg`,
+    Task: `${process.env.PUBLIC_URL}/task.svg`,
+    Bug: `${process.env.PUBLIC_URL}/bug.svg`
+};

@@ -19,7 +19,7 @@ import { delay } from 'lodash';
 
 import { CreateProps, priorityType, Project, Task, taskType, User } from '../models/models';
 import { getUserById, getUsersByProjectKey, projectsMock } from '../mocks/mocks';
-import { issueTypes, priorities, priorityIcons, unassignedUser } from '../models/constants';
+import { issueTypes, priorities, priorityIcons, taskTypeIcons, unassignedUser } from '../models/constants';
 import { formsStyles, blockStyles, indentsStyles, typographyStyles } from '../styles';
 import TextEditor from '../components/text-editor/TextEditor';
 import SearchInSelect from '../components/SearchInSelect';
@@ -33,10 +33,6 @@ type CreateTaskState = {
     errors: {[key: string]: string}
 }
 
-// -------------- Lowest priority
-//  2) icons for
-//  - project selector, (divide for groups)
-//  - issue type selector
 class CreateTask extends Component<CreateProps, CreateTaskState> {
     defaultState: CreateTaskState = {
         newTaskData: {
@@ -111,6 +107,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
         const avatarMargin = `${mRSmall} ${mBSmall} ${mTSmall}`;
         const avatar = `${avatarSmall} ${avatarMargin}`;
         const avatarOption = `${avatar} ${mLNegative} ${mRMid}`;
+        const typeIconOption = `${mLNegative} ${mRMid}`;
 
         const handleClose = () => {
             onClose(true);
@@ -260,9 +257,15 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                             renderOptionFragment={
                                 (option: taskType) => (
                                     <Fragment>
+                                        <img className={typeIconOption} src={taskTypeIcons[option]} />
                                         {option}
                                     </Fragment>
                                 )
+                            }
+                            startAdornmentFragment={
+                                <Fragment>
+                                    <img src={taskTypeIcons[type]} />
+                                </Fragment>
                             }
                             boxStyles={rowClass}
                             inputStyles={selectClass}

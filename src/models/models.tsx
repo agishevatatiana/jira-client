@@ -7,7 +7,8 @@ export type priorityType = 'Highest' | 'High' | 'Medium' | 'Low' | 'Lowest';
 export interface Column {
     key: string,
     title: string,
-    sequence: number
+    sequence: number,
+    task_number: number
 }
 
 export interface Project {

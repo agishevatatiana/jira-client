@@ -73,21 +73,23 @@ class ProjectColumn extends Component<ProjectColumnProps, {}> {
     render() {
         const columnEditMenu = ['Set column limit', 'Delete'];
         const { column, classes, connectDragSource, connectDragPreview, connectDropTarget, isDragging } = this.props;
-        const { key, title } = column;
-        const handler = (title: string) => connectDragSource(
-            <div className={isDragging ? classes.handlerMove : classes.handler}>
-                <Typography variant="overline">{title}</Typography>
+        const { key, title, task_number } = column;
+        const { handlerMove, handlerClass, columnHeader, columnTitle, paper } = classes;
+        const handler = (title: string, task_number: number) => connectDragSource(
+            <div className={isDragging ? handlerMove : handlerClass}>
+                <Typography variant="overline" className={columnTitle}>{title}</Typography>
+                <Typography variant="overline">{task_number}</Typography>
             </div>
         );
         const opacity = isDragging ? 0 : 1;
         const preview = (key: string, title: string) => {
             return connectDragPreview(connectDropTarget(
                 <div key={key} style={ {opacity} }>
-                    <Paper className={classes.paper}>
-                        <Grid className={classes.columnHeader} item container direction="row"
+                    <Paper className={paper}>
+                        <Grid className={columnHeader} item container direction="row"
                               justify="space-between">
                             <Grid item>
-                                {handler(title)}
+                                {handler(title, task_number)}
                             </Grid>
                             <Grid item>
                                 <EditMenu menuItems={columnEditMenu}/>

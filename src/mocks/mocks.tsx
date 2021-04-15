@@ -5,10 +5,10 @@ const createMockProjects = (key: string | undefined, project_key: string, lead: 
     key, project_key, lead, name
 });
 export const projectsMock: Project[] = [
-    createMockProjects('0', 'mock-project-0', 'creatorId', 'Mock Project'),
-    createMockProjects('1', 'mock-project-1', 'creatorId', 'Mock Project 1'),
-    createMockProjects('2', 'mock-project-2', 'creatorId', 'Mock Project 2'),
-    createMockProjects('3', 'mock-project-3', 'creatorId', 'Mock Project 3')
+    createMockProjects('0', 'MP', 'creatorId', 'Mock Project'),
+    createMockProjects('1', 'MP1', 'creatorId', 'Mock Project 1'),
+    createMockProjects('2', 'MP2', 'creatorId', 'Mock Project 2'),
+    createMockProjects('3', 'MP3', 'creatorId', 'Mock Project 3')
 ];
 
 export const getProjectByKey = (key: string | null) => projectsMock.find(project => project.key === key);
@@ -58,11 +58,11 @@ export const getUsersByProjectKey = (key: string): User[] => usersMock.filter(us
 // *** users
 
 // columns
-const createProjectColumn = (key: string, title: string, sequence: number): Column => ({key, title, sequence});
+const createProjectColumn = (key: string, title: string, sequence: number, task_number: number): Column => ({key, title, sequence, task_number});
 export const defaultColumns: Column[] = [
-    createProjectColumn('to_do', 'TO DO', 0),
-    createProjectColumn('in_progress', 'IN PROGRESS', 1),
-    createProjectColumn('done', 'DONE', 2),
+    createProjectColumn('to_do', 'TO DO', 0, 4),
+    createProjectColumn('in_progress', 'IN PROGRESS', 1, 0),
+    createProjectColumn('done', 'DONE', 2, 0),
 ];
 
 // tasks
