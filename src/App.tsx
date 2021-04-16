@@ -1,8 +1,10 @@
+import { green } from '@material-ui/core/colors';
+import orange from '@material-ui/core/colors/orange';
+import red from '@material-ui/core/colors/red';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
-import blue from '@material-ui/core/colors/blue';
+
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import Container from "@material-ui/core/Container";
 import jwtDecode from 'jwt-decode';
@@ -44,8 +46,27 @@ if (token) {
 // https://material-ui.com/customization/color/
 const theme = createMuiTheme({
   palette: {
-    primary: indigo,
-    secondary: blue
+    primary: {
+      light: '#f4f5f7',
+      main: '#0052cc',
+      dark: '#344563',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      main: '#7a869a',
+      contrastText: '#5e6c84',
+    },
+    error: {
+      main: red[400],
+      dark: red[700]
+    },
+    warning: {
+      main: orange[600]
+    },
+    success: {
+      main: green[400],
+      dark: green[700]
+    }
   },
   typography: {},
 

@@ -1,11 +1,11 @@
-import { Styles } from '@material-ui/styles/withStyles';
-import grey from '@material-ui/core/colors/grey';
+import { Theme } from '@material-ui/core';
 
-export const projectColumnStyles: Styles<any, any> = {
+export const projectColumnStyles: any = (theme: Theme) => ({
     paper: {
         minHeight: '200px',
-        backgroundColor: grey[100],
-        position: 'relative'
+        backgroundColor: theme.palette.primary.light,
+        position: 'relative',
+        height: '100%'
     },
     columnHeader: {
         padding: '8px'
@@ -19,4 +19,4 @@ export const projectColumnStyles: Styles<any, any> = {
     handlerMove: {
         cursor: 'grabbing !importants'
     }
-};
+});

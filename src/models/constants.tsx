@@ -11,12 +11,11 @@ import {
     ArrowUpward,
     ArrowDownward
 } from '@material-ui/icons';
-import red from '@material-ui/core/colors/red';
-import orange from '@material-ui/core/colors/orange';
-import green from '@material-ui/core/colors/green';
 
 import { createMockUsers } from '../mocks/mocks';
 import { priorityType, taskStatus, taskType } from './models';
+
+export const publicUrl = process.env.PUBLIC_URL;
 
 export const DnDTypes = {
     COLUMN: 'column',
@@ -79,17 +78,17 @@ export const unassignedUser = createMockUsers('000000', 'Unassigned', 'Unassigne
 
 export const priorities: priorityType[] = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
 
-export const priorityIcons = (setIndents: string): {[key: string]: CElement<any, any>} => ({
-    Highest: <ArrowUpward className={setIndents} style={{ color: red[700] }} />,
-    High: <ArrowUpward className={setIndents} style={{ color: red[400] }} />,
-    Medium: <ArrowUpward className={setIndents} style={{ color: orange[600] }} />,
-    Low: <ArrowDownward className={setIndents} style={{ color: green[700] }} />,
-    Lowest: <ArrowDownward className={setIndents} style={{ color: green[400] }} />,
+export const priorityIcons = (type: string, setIndents?: string): {[key: string]: CElement<any, any>} => ({
+    Highest: <ArrowUpward className={`${setIndents} ${type}`} />,
+    High: <ArrowUpward className={`${setIndents} ${type}`} />,
+    Medium: <ArrowUpward className={`${setIndents} ${type}`} />,
+    Low: <ArrowDownward className={`${setIndents} ${type}`} />,
+    Lowest: <ArrowDownward className={`${setIndents} ${type}`} />,
 });
 
 export const taskTypeIcons: {[key: string]: string} = {
-    Epic: `${process.env.PUBLIC_URL}/epic.svg`,
-    Story: `${process.env.PUBLIC_URL}/story.svg`,
-    Task: `${process.env.PUBLIC_URL}/task.svg`,
-    Bug: `${process.env.PUBLIC_URL}/bug.svg`
+    Epic: `${publicUrl}/epic.svg`,
+    Story: `${publicUrl}/story.svg`,
+    Task: `${publicUrl}/task.svg`,
+    Bug: `${publicUrl}/bug.svg`
 };

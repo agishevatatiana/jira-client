@@ -18,7 +18,7 @@ import { convertToRaw } from 'draft-js';
 import { delay } from 'lodash';
 
 import { CreateProps, priorityType, Project, Task, taskType, User } from '../models/models';
-import { getUserById, getUsersByProjectKey, projectsMock } from '../mocks/mocks';
+import { getProjectByKey, getUserById, getUsersByProjectKey, projectsMock } from '../mocks/mocks';
 import { issueTypes, priorities, priorityIcons, taskTypeIcons, unassignedUser } from '../models/constants';
 import { formsStyles, blockStyles, indentsStyles, typographyStyles } from '../styles';
 import TextEditor from '../components/text-editor/TextEditor';
@@ -36,13 +36,16 @@ type CreateTaskState = {
 class CreateTask extends Component<CreateProps, CreateTaskState> {
     defaultState: CreateTaskState = {
         newTaskData: {
+            key: '00',
             project_key: '',
+            project_key_title: '',
             reporter: '', // the key of the user who reported task
-            description: '',
+            description: {},
             assignee: '',
             status: 'to_do',
             type: 'Task',
             summary: '',
+            task_number: 0,
             priority: 'Medium',
             sequence: 0,
         },
@@ -67,7 +70,8 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                 ...newTaskData,
                 reporter: (currentUser || {}).key || '',
                 assignee: unassignedUser.key,
-                project_key: projectKey
+                project_key: projectKey,
+                project_key_title: (getProjectByKey(projectKey) || {}).project_key || ''
             }
         });
     }
@@ -118,7 +122,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
 
             delay(() => {
                 this.setState({ isSubmitAction: false });
-                console.log('newTaskData: ', newTaskData, this.state);
+                console.log('newTaskData: ', this.state.newTaskData);
                 handleClose();
             }, 1000);
 
@@ -233,7 +237,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                             id={'project'}
                             label={'Project'}
                             data={projects}
-                            defaultValue={projects.find(p => p.key === project_key)}
+                            defaultValue={getProjectByKey(project_key)}
                             getOptionLabel={(option: Project) => `${option.name} (${option.project_key})`}
                             renderOptionFragment={
                                 (option: Project) => (
@@ -361,13 +365,13 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                             renderOptionFragment={
                                 (option: priorityType) => (
                                     <Fragment>
-                                        {priorityIcons(avatarMargin)[option]}
+                                        {priorityIcons(classes[`priority${option}`], avatarMargin)[option]}
                                         {option}
                                     </Fragment>
                                 )
                             }
                             startAdornmentFragment={
-                                (<Fragment> {priorityIcons(avatarMargin)[priority]} </Fragment>)
+                                (<Fragment> {priorityIcons(classes[`priority${priority}`], avatarMargin)[priority]} </Fragment>)
                             }
                             boxStyles={rowClass}
                             inputStyles={selectClass}

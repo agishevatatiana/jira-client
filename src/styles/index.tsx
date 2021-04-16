@@ -6,3 +6,4 @@ export { projectColumnStyles } from './project-column-styles';
 export { textEditorStyles } from './text-editor-styles';
 export { typographyStyles } from './typography';
 export { usersListStyles } from './users-list-styles';
+export { taskCardStyles } from './task-card-styles';

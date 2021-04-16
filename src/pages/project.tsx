@@ -6,7 +6,7 @@ import { MatchProps, Project, User } from '../models/models';
 import { getProjectByKey, getUsersByProjectKey } from '../mocks/mocks';
 import Breadcrumbs from '../components/Breadcrumbs';
 import UsersList from '../components/UsersList';
-import DndProjectColumns from '../components/DndProjectColumns';
+import DndProjectColumns from '../components/project-columns/DndProjectColumns';
 
 type ProjectState = {
     project: Project | null;

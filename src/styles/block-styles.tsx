@@ -9,6 +9,10 @@ export const blockStyles: Styles<any, any> = {
         display: 'flex'
     },
 
+    spaceBetween: {
+        justifyContent: 'space-between'
+    },
+
     hide: {
         display: 'none'
     },
@@ -16,4 +20,5 @@ export const blockStyles: Styles<any, any> = {
     relative: {
         position: 'relative'
     }
+
 };

@@ -1,7 +1,6 @@
-import { Styles } from '@material-ui/styles/withStyles';
-import grey from '@material-ui/core/colors/grey';
+import { Theme } from '@material-ui/core';
 
-export const editMenuStyles: Styles<any, any> = {
+export const editMenuStyles: any = (theme: Theme) => ({
     popper: {
         top: '36px !important',
         left: 'auto !important',
@@ -9,6 +8,6 @@ export const editMenuStyles: Styles<any, any> = {
         transform: 'none !important'
     },
     openBtn: {
-        backgroundColor: grey.A100
+        backgroundColor: theme.palette.primary.light
     }
-};
+});

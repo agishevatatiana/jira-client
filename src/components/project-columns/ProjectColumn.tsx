@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
-import { Grid, Paper, Typography, withStyles } from '@material-ui/core';
+import { Grid, Paper, Theme, Typography, withStyles } from '@material-ui/core';
 import { DragLayerMonitor, DragSource, DropTarget, DropTargetMonitor } from 'react-dnd';
 import { flow } from 'lodash';
 
-import { Column } from '../models/models';
-import { DnDTypes } from '../models/constants';
-import EditMenu from './EditMenu';
-import { projectColumnStyles } from '../styles';
+import { ProjectColumnProps, taskStatus } from '../../models/models';
+import { DnDTypes } from '../../models/constants';
+import EditMenu from '../EditMenu';
+import { indentsStyles, projectColumnStyles } from '../../styles';
+import DndTaskCards from '../task-cards-view/DndTaskCards';
 
 // todo: 1) fix problem with strange shadow behavior with dnd
 //  2) fix cursor handlerMove using react-dnd effects
-
-type ProjectColumnProps = {
-    column: Column,
-    key: string,
-    classes: any,
-    moveColumn: (key: string, afterKey: string) => void,
-    connectDragSource: any,
-    connectDragPreview: any,
-    connectDropTarget: any,
-    isDragging: boolean
-}
-
 const columnSource = {
     beginDrag(props: ProjectColumnProps) {
         const item = {
@@ -82,12 +71,11 @@ class ProjectColumn extends Component<ProjectColumnProps, {}> {
             </div>
         );
         const opacity = isDragging ? 0 : 1;
-        const preview = (key: string, title: string) => {
+        const preview = (key: taskStatus, title: string) => {
             return connectDragPreview(connectDropTarget(
-                <div key={key} style={ {opacity} }>
+                <div key={key} style={ {opacity, height: '100%'} }>
                     <Paper className={paper}>
-                        <Grid className={columnHeader} item container direction="row"
-                              justify="space-between">
+                        <Grid className={columnHeader} item container direction="row" justify="space-between">
                             <Grid item>
                                 {handler(title, task_number)}
                             </Grid>
@@ -95,6 +83,7 @@ class ProjectColumn extends Component<ProjectColumnProps, {}> {
                                 <EditMenu menuItems={columnEditMenu}/>
                             </Grid>
                         </Grid>
+                        <DndTaskCards status={key} classes={classes} />
                     </Paper>
                 </div>
             ))
@@ -110,5 +99,8 @@ class ProjectColumn extends Component<ProjectColumnProps, {}> {
 export default flow(
     DragSource(DnDTypes.COLUMN, columnSource, collect),
     DropTarget(DnDTypes.COLUMN, columnTarget, collectTargets),
-    withStyles(projectColumnStyles)
+    withStyles((theme: Theme) => ({
+        ...projectColumnStyles(theme),
+        ...indentsStyles(theme)
+    }))
 )(ProjectColumn);

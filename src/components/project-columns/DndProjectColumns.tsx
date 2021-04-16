@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
+import update from 'immutability-helper';
 
 import ProjectColumn from './ProjectColumn';
-import { Column } from '../models/models';
-import { defaultColumns } from '../mocks/mocks';
-import update from 'immutability-helper';
+import { Column } from '../../models/models';
+import { defaultColumns } from '../../mocks/mocks';
 
 type DndProjectColumnsState = {
     columns: Column[]
