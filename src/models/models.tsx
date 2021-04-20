@@ -92,6 +92,8 @@ export type SearchInSelectProps = {
 
 export type ProjectColumnProps = {
     column: Column,
+    tasks: Task[],
+    onTasksListChange: Function,
     key: string,
     classes: any,
     moveColumn: (key: string, afterKey: string) => void,
@@ -111,3 +113,5 @@ export type TaskCardProps = {
     connectDropTarget: any,
     isDragging: boolean
 }
+
+export type TasksMap = {[key: string]: Task[]}

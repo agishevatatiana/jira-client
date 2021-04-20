@@ -3,9 +3,6 @@ import {
     Avatar,
     Card,
     CardActions,
-    CardContent,
-    CardHeader,
-    Grid,
     Theme,
     Typography,
     withStyles
@@ -37,9 +34,7 @@ const taskTarget = {
 
     hover(props: TaskCardProps, monitor: DropTargetMonitor) {
         const item = monitor.getItem();
-        if (!item || !item.key || item.key === props.task.key) {
-            return;
-        }
+        if (!item || !item.key || item.key === props.task.key) return;
         props.moveTask(item.key, props.task.key);
     }
 };
@@ -72,12 +67,12 @@ class TaskCard extends Component<TaskCardProps, {}> {
 
     render() {
         const { task, classes, connectDragPreview, connectDropTarget, connectDragSource, isDragging } = this.props;
-        const { mBMiddle, flex, spaceBetween, avatarMiddle, mLSmall } = classes;
-        console.log(task);
-        const { key, type, summary, priority, project_key_title, assignee, status, sequence, task_number } = task;
+        const { mBMiddle, flex, spaceBetween, avatarMiddle, mLSmall, handlerMove, handlerClass, lineThrough } = classes;
+        const { key, type, summary, priority, project_key_title, assignee, task_number, status } = task;
+        const hClass = isDragging ? handlerMove : handlerClass;
         return (
             connectDragPreview(connectDropTarget(connectDragSource(
-                <div className={mBMiddle}>
+                <div className={`${mBMiddle} ${hClass}`}>
                     <Card key={key}>
                         <CardActions><Typography>{summary}</Typography></CardActions>
                         <CardActions className={`${flex} ${spaceBetween}`} disableSpacing>
@@ -87,7 +82,7 @@ class TaskCard extends Component<TaskCardProps, {}> {
                             </div>
 
                             <div className={flex}>
-                                <Typography>{project_key_title}-{task_number}</Typography>
+                                <Typography className={status === 'done' ? lineThrough : ''}>{project_key_title}-{task_number}</Typography>
                                 <Fragment>{
                                     assignee ? (
                                         <Avatar
@@ -109,7 +104,12 @@ class TaskCard extends Component<TaskCardProps, {}> {
 export default flow(
     DragSource(DnDTypes.TASK, taskSource, collect),
     DropTarget(DnDTypes.TASK, taskTarget, collectTargets),
-    withStyles((theme: Theme) => ({...taskCardStyles, ...blockStyles, ...typographyStyles(theme), ...indentsStyles(theme)}))
+    withStyles((theme: Theme) => ({
+        ...taskCardStyles,
+        ...blockStyles,
+        ...typographyStyles(theme),
+        ...indentsStyles(theme)})
+    )
 )(TaskCard);
 
 

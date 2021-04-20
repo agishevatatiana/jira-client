@@ -50,5 +50,8 @@ export const typographyStyles: any = (theme: Theme) => ({
     avatarMiddle: {
         width: theme.spacing(3),
         height: theme.spacing(3),
+    },
+    lineThrough: {
+        textDecoration: 'line-through'
     }
 });

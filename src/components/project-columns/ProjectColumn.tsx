@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Grid, Paper, Theme, Typography, withStyles } from '@material-ui/core';
 import { DragLayerMonitor, DragSource, DropTarget, DropTargetMonitor } from 'react-dnd';
-import { flow } from 'lodash';
+import { flow, isEqual } from 'lodash';
 
-import { ProjectColumnProps, taskStatus } from '../../models/models';
+import { ProjectColumnProps, Task, TasksMap, taskStatus } from '../../models/models';
 import { DnDTypes } from '../../models/constants';
 import EditMenu from '../EditMenu';
-import { indentsStyles, projectColumnStyles } from '../../styles';
+import { blockStyles, indentsStyles, projectColumnStyles } from '../../styles';
 import DndTaskCards from '../task-cards-view/DndTaskCards';
 
 // todo: 1) fix problem with strange shadow behavior with dnd
@@ -58,36 +58,84 @@ function collect(connect: any, monitor: DragLayerMonitor) {
     }
 }
 
-class ProjectColumn extends Component<ProjectColumnProps, {}> {
+type DndTaskCardsState = {
+    tasksMap: TasksMap
+}
+
+class ProjectColumn extends Component<ProjectColumnProps, DndTaskCardsState> {
+
+    constructor(props: ProjectColumnProps) {
+        super(props);
+        this.state = {
+            tasksMap: {}
+        }
+    }
+
+    onTasksStateChange = (tasks: Task[], tasksMap?: TasksMap): void => {
+        this.props.onTasksListChange(tasks);
+        if (tasksMap) this.setState({ tasksMap });
+    };
+
+    filterTasks = ():void => {
+        let tasksMapUpd: TasksMap = {};
+        this.props.tasks.forEach(t => {
+            if(!tasksMapUpd[t.status]) tasksMapUpd[t.status] = [];
+            tasksMapUpd[t.status].push(t);
+        });
+
+        this.setState({ tasksMap: tasksMapUpd });
+    };
+
+    componentDidUpdate(prevProps: Readonly<ProjectColumnProps>, prevState: Readonly<DndTaskCardsState>, snapshot?: any): void {
+        if(!isEqual(prevProps.tasks, this.props.tasks)) {
+            this.filterTasks();
+        }
+    }
+
+    componentDidMount(): void {
+        this.filterTasks();
+    }
+
     render() {
         const columnEditMenu = ['Set column limit', 'Delete'];
-        const { column, classes, connectDragSource, connectDragPreview, connectDropTarget, isDragging } = this.props;
-        const { key, title, task_number } = column;
-        const { handlerMove, handlerClass, columnHeader, columnTitle, paper } = classes;
-        const handler = (title: string, task_number: number) => connectDragSource(
+        const { column, classes, connectDragSource, connectDragPreview, connectDropTarget, isDragging, tasks } = this.props;
+        const { key, title } = column;
+        const { handlerMove, handlerClass, columnTitle, paper, opacity0, opacity1, height100p } = classes;
+        const { tasksMap } = this.state;
+
+        const handler = (title: string, key: taskStatus) => connectDragSource(
             <div className={isDragging ? handlerMove : handlerClass}>
                 <Typography variant="overline" className={columnTitle}>{title}</Typography>
-                <Typography variant="overline">{task_number}</Typography>
+                <Typography variant="overline">{(tasksMap[key] || []).length}</Typography>
             </div>
         );
-        const opacity = isDragging ? 0 : 1;
+
+        const opacity = isDragging ? opacity0 : opacity1;
         const preview = (key: taskStatus, title: string) => {
             return connectDragPreview(connectDropTarget(
-                <div key={key} style={ {opacity, height: '100%'} }>
+                <div key={key} className={`${opacity} ${height100p}`}>
                     <Paper className={paper}>
-                        <Grid className={columnHeader} item container direction="row" justify="space-between">
+                        <Grid item container direction="row" justify="space-between">
                             <Grid item>
-                                {handler(title, task_number)}
+                                {handler(title, column.key)}
                             </Grid>
                             <Grid item>
                                 <EditMenu menuItems={columnEditMenu}/>
                             </Grid>
                         </Grid>
-                        <DndTaskCards status={key} classes={classes} />
+                        <DndTaskCards
+                            status={column.key}
+                            classes={classes}
+                            tasks={tasks}
+                            tasksMap={tasksMap}
+                            filteredTasks={tasksMap[column.key] || []}
+                            onTasksChange={this.onTasksStateChange}
+                        />
                     </Paper>
                 </div>
             ))
         };
+
         return (
             <Grid item container direction="column" xs>
                 {preview(key, title)}
@@ -101,6 +149,7 @@ export default flow(
     DropTarget(DnDTypes.COLUMN, columnTarget, collectTargets),
     withStyles((theme: Theme) => ({
         ...projectColumnStyles(theme),
-        ...indentsStyles(theme)
+        ...indentsStyles(theme),
+        ...blockStyles
     }))
 )(ProjectColumn);
