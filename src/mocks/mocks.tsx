@@ -5,10 +5,10 @@ const createMockProjects = (key: string | undefined, project_key: string, lead: 
     key, project_key, lead, name
 });
 export const projectsMock: Project[] = [
-    createMockProjects('0', 'mock-project-0', 'creatorId', 'Mock Project'),
-    createMockProjects('1', 'mock-project-1', 'creatorId', 'Mock Project 1'),
-    createMockProjects('2', 'mock-project-2', 'creatorId', 'Mock Project 2'),
-    createMockProjects('3', 'mock-project-3', 'creatorId', 'Mock Project 3')
+    createMockProjects('0', 'MP', 'creatorId', 'Mock Project'),
+    createMockProjects('1', 'MP1', 'creatorId', 'Mock Project 1'),
+    createMockProjects('2', 'MP2', 'creatorId', 'Mock Project 2'),
+    createMockProjects('3', 'MP3', 'creatorId', 'Mock Project 3')
 ];
 
 export const getProjectByKey = (key: string | null) => projectsMock.find(project => project.key === key);
@@ -58,29 +58,175 @@ export const getUsersByProjectKey = (key: string): User[] => usersMock.filter(us
 // *** users
 
 // columns
-const createProjectColumn = (key: string, title: string, sequence: number): Column => ({key, title, sequence});
+const createProjectColumn = (key: taskStatus, title: string, sequence: number, task_number: number): Column => ({key, title, sequence, task_number});
 export const defaultColumns: Column[] = [
-    createProjectColumn('to_do', 'TO DO', 0),
-    createProjectColumn('in_progress', 'IN PROGRESS', 1),
-    createProjectColumn('done', 'DONE', 2),
+    createProjectColumn('to_do', 'TO DO', 0, 4),
+    createProjectColumn('in_progress', 'IN PROGRESS', 1, 0),
+    createProjectColumn('done', 'DONE', 2, 0),
 ];
 
 // tasks
 export const createMockTask = (
     key: string,
     project_key: string,
+    project_key_title: string,
     reporter: string,
-    description: string,
+    description: object,
     type: taskType,
     summary: string,
     sequence: number,
+    task_number: number,
     priority: priorityType,
+    assignee?: string,
     status?: taskStatus
-): Task => ({key, project_key, reporter, description, type, summary, sequence, priority, status: status || 'to_do'});
+): Task => ({key, project_key, project_key_title, reporter, description, type, summary, sequence, task_number, priority, assignee, status: status || 'to_do'});
 
 export const tasksMock: Task[] = [
-    createMockTask('000', '0', '03', 'test description 1', 'Task', 'test summary 1', 0, 'Medium'),
-    createMockTask('001', '0', '01', 'test description 2', 'Task', 'test summary 2', 1, 'High'),
-    createMockTask('002', '0', '01', 'test description 3', 'Task', 'test summary 3', 2, 'Medium'),
-    createMockTask('003', '0', '01', 'test description 4', 'Bug', 'test summary 4', 3, 'Low')
+    createMockTask('000', '0', 'MP', '03', {
+        "blocks": [
+            {
+                "key": "5eamj",
+                "text": "Lorem Ipsum ",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [
+                    {
+                        "offset": 0,
+                        "length": 11,
+                        "style": "BOLD"
+                    }
+                ],
+                "entityRanges": [],
+                "data": {}
+            },
+            {
+                "key": "brl9s",
+                "text": "is simply dummy text of the printing and typesetting industry. ",
+                "type": "ordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            },
+            {
+                "key": "25pp9",
+                "text": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                "type": "ordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            },
+            {
+                "key": "dpe6k",
+                "text": "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ",
+                "type": "ordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            },
+            {
+                "key": "fot8i",
+                "text": "Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                "type": "ordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            }
+        ],
+        "entityMap": {}
+    }, 'Task', 'test summary 1', 0, 2,'Medium', '01'),
+    createMockTask('001', '0', 'MP','01', {
+        "blocks": [
+            {
+                "key": "55gh7",
+                "text": "",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            }
+        ],
+        "entityMap": {}
+    }, 'Task', 'test summary 2', 1, 1,'High'),
+    createMockTask('002', '0', 'MP','01', {
+        "blocks": [
+            {
+                "key": "3fota",
+                "text": "constructor(createTaskProps: CreateProps) {\n    super(createTaskProps);\n    this.state = this.defaultState;\n}",
+                "type": "code-block",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            },
+            {
+                "key": "avekv",
+                "text": "test1",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            },
+            {
+                "key": "br958",
+                "text": "test2",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [
+                    {
+                        "offset": 0,
+                        "length": 5,
+                        "style": "UNDERLINE"
+                    }
+                ],
+                "entityRanges": [],
+                "data": {}
+            }
+        ],
+        "entityMap": {}
+    }, 'Task', 'test summary 3', 2, 0, 'Medium'),
+    createMockTask('003', '0', 'MP', '01', {
+        "blocks": [
+            {
+                "key": "41rnb",
+                "text": "Why do we use it?",
+                "type": "header-one",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {}
+            },
+            {
+                "key": "ao7k1",
+                "text": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+                "type": "blockquote",
+                "depth": 0,
+                "inlineStyleRanges": [
+                    {
+                        "offset": 239,
+                        "length": 374,
+                        "style": "UNDERLINE"
+                    },
+                    {
+                        "offset": 239,
+                        "length": 374,
+                        "style": "CODE"
+                    },
+                    {
+                        "offset": 254,
+                        "length": 359,
+                        "style": "ITALIC"
+                    }
+                ],
+                "entityRanges": [],
+                "data": {}
+            }
+        ],
+        "entityMap": {}
+    }, 'Bug', 'test summary 4', 3, 3, 'Low')
 ];

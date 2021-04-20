@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-
-import ProjectColumn from './ProjectColumn';
-import { Column } from '../models/models';
-import { defaultColumns } from '../mocks/mocks';
 import update from 'immutability-helper';
 
+import ProjectColumn from './ProjectColumn';
+import { Column, Task } from '../../models/models';
+import { defaultColumns, tasksMock } from '../../mocks/mocks';
+
 type DndProjectColumnsState = {
-    columns: Column[]
+    columns: Column[],
+    tasks: Task[]
 }
 
 class DndProjectColumns extends Component<{}, DndProjectColumnsState> {
@@ -16,7 +17,8 @@ class DndProjectColumns extends Component<{}, DndProjectColumnsState> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            columns: defaultColumns
+            columns: defaultColumns,
+            tasks: tasksMock
         }
     }
 
@@ -77,11 +79,22 @@ class DndProjectColumns extends Component<{}, DndProjectColumnsState> {
         })
     };
 
+    tasksListChange = (tasks: Task[]): void => {
+        this.setState({tasks});
+    };
+
     render() {
-        const { columns } = this.state;
+        const { columns, tasks } = this.state;
         const columnsView = columns
             .sort((a, b) => a.sequence - b.sequence)
-            .map((col, index) => (<ProjectColumn key={col.key} column={col} moveColumn={this.moveColumn} />));
+            .map((col, index) => (
+                <ProjectColumn
+                    key={col.key}
+                    column={col}
+                    tasks={tasks}
+                    moveColumn={this.moveColumn}
+                    onTasksListChange={this.tasksListChange}
+                />));
         return (
             <Grid container spacing={2}>
                 {columnsView}

@@ -1,19 +1,23 @@
-import { Styles } from '@material-ui/styles/withStyles';
-import grey from '@material-ui/core/colors/grey';
+import { Theme } from '@material-ui/core';
 
-export const projectColumnStyles: Styles<any, any> = {
+export const projectColumnStyles: any = (theme: Theme) => ({
     paper: {
         minHeight: '200px',
-        backgroundColor: grey.A100,
-        position: 'relative'
-    },
-    columnHeader: {
+        backgroundColor: theme.palette.primary.light,
+        position: 'relative',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
         padding: '8px'
     },
-    handler: {
-        cursor: 'grab !important'
+
+    dropArea: {
+        border: '2px dashed',
+        borderColor: theme.palette.success.main,
+        borderRadius: '2px'
     },
-    handlerMove: {
-        cursor: 'grabbing !importants'
+
+    columnTitle: {
+        marginRight: '5px'
     }
-};
+});

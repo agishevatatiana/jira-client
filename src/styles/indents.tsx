@@ -13,6 +13,9 @@ export const indentsStyles: any = (theme: Theme) => ({
     mBSmall: {
         marginBottom: theme.spacing(0.3)
     },
+    mBMiddle: {
+        marginBottom: theme.spacing(1)
+    },
     mLSmall: {
         marginLeft: theme.spacing(0.3)
     },
@@ -24,5 +27,11 @@ export const indentsStyles: any = (theme: Theme) => ({
     },
     mLNegative: {
         marginLeft: theme.spacing(-1)
+    },
+    pSmall: {
+        padding: theme.spacing(1)
+    },
+    pTopZero: {
+        paddingTop: 0
     }
 });

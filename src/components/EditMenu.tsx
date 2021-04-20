@@ -1,6 +1,16 @@
 import React, {useState, useRef, MouseEvent} from 'react';
 import PropTypes from 'prop-types';
-import { ClickAwayListener, IconButton, MenuItem, MenuList, Paper, Popper, Typography, withStyles } from '@material-ui/core';
+import {
+    ClickAwayListener,
+    IconButton,
+    MenuItem,
+    MenuList,
+    Paper,
+    Popper,
+    Theme,
+    Typography,
+    withStyles
+} from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import { editMenuStyles } from '../styles/edit-menu-styles';
@@ -62,4 +72,4 @@ EditMenu.propTypes = {
 };
 EditMenu.defaultProps = {};
 
-export default withStyles(editMenuStyles)(EditMenu);
+export default withStyles((theme: Theme) => editMenuStyles(theme))(EditMenu);
