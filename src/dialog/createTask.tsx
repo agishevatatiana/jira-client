@@ -110,8 +110,8 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
 
         const avatarMargin = `${mRSmall} ${mBSmall} ${mTSmall}`;
         const avatar = `${avatarSmall} ${avatarMargin}`;
-        const avatarOption = `${avatar} ${mLNegative} ${mRMid}`;
-        const typeIconOption = `${mLNegative} ${mRMid}`;
+        const optionIndents = `${mLNegative} ${mRMid}`;
+        const avatarOption = `${avatar} ${optionIndents}`;
 
         const handleClose = () => {
             onClose(true);
@@ -261,7 +261,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                             renderOptionFragment={
                                 (option: taskType) => (
                                     <Fragment>
-                                        <img className={typeIconOption} src={taskTypeIcons[option]} />
+                                        <img className={optionIndents} src={taskTypeIcons[option]} />
                                         {option}
                                     </Fragment>
                                 )
@@ -365,7 +365,7 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                             renderOptionFragment={
                                 (option: priorityType) => (
                                     <Fragment>
-                                        {priorityIcons(classes[`priority${option}`], avatarMargin)[option]}
+                                        <span className={optionIndents}>{priorityIcons(classes[`priority${option}`], avatarMargin)[option]}</span>
                                         {option}
                                     </Fragment>
                                 )
@@ -389,7 +389,6 @@ class CreateTask extends Component<CreateProps, CreateTaskState> {
                             Create
                         </Button>
                     </DialogActions>
-                    {}
                 </FormGroup>
             </Dialog>
         );
